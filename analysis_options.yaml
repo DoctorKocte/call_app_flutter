@@ -1,0 +1,332 @@
+include: package:flutter_lints/flutter.yaml
+analyzer:
+  strong-mode:
+  errors:
+    # treat missing required parameters as a error (not a hint)
+    missing_required_param: error
+    # treat missing returns as a error (not a hint)
+    missing_return: error
+    # allow having TODOs in the code
+    todo: ignore
+    # Ignore analyzer hints for updating pubspecs when using Future or
+    # Stream and not importing dart:async
+    # Please see https://github.com/flutter/flutter/pull/24528 for details.
+    sdk_version_async_exported_from_core: ignore
+    type_annotate_public_apis: ignore
+    public_member_api_docs: ignore
+    prefer_relative_imports: ignore
+    prefer_function_declarations_over_variables: ignore
+    prefer_mixin: ignore
+    one_member_abstracts: ignore
+    avoid_catches_without_on_clauses: ignore
+    invalid_annotation_target: ignore
+    body_might_complete_normally_nullable: ignore
+    depend_on_referenced_packages: ignore
+    library_private_types_in_public_api: ignore
+  exclude:
+    - "bin/cache/**"
+    # workaround for https://github.com/dart-lang/sdk/issues/42910
+    - "local_plugins/**"
+    # the following two are relative to the stocks example and the flutter package respectively
+    # see https://github.com/dart-lang/sdk/issues/28463
+    - "**.g.dart"
+    - "**.freezed.dart"
+    - "**.mocks.dart"
+    - "lib/generated/**"
+    - "test/features/**"
+    - "test/fixtures/**"
+  plugins:
+    - dart_code_metrics
+
+linter:
+  rules:
+    - always_declare_return_types
+    - always_put_control_body_on_new_line
+    - always_use_package_imports
+    - always_put_required_named_parameters_first # we prefer having parameters in the same order as fields https://github.com/flutter/flutter/issues/10219
+    - always_require_non_null_named_parameters
+    - annotate_overrides
+    # - avoid_annotating_with_dynamic # conflicts with always_specify_types
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_classes_with_only_static_members
+    # - avoid_double_and_int_checks # only useful when targeting JS runtime
+    - avoid_empty_else
+    - avoid_print
+    - avoid_escaping_inner_quotes
+    - avoid_field_initializers_in_const_classes
+    - avoid_function_literals_in_foreach_calls
+    # - avoid_implementing_value_types # not yet tested
+    - avoid_init_to_null
+    # - avoid_js_rounded_ints # only useful when targeting JS runtime
+    - avoid_null_checks_in_equality_operators
+    - avoid_multiple_declarations_per_line
+    - avoid_positional_boolean_parameters # not yet tested
+    # - avoid_private_typedef_functions # we prefer having typedef (discussion in https://github.com/flutter/flutter/pull/16356)
+    - avoid_relative_lib_imports
+    - avoid_renaming_method_parameters
+    - avoid_return_types_on_setters
+    # - avoid_returning_null # there are plenty of valid reasons to return null
+    # - avoid_returning_null_for_future # not yet tested
+    - avoid_returning_null_for_void
+    - avoid_redundant_argument_values
+    # - avoid_returning_this # there are plenty of valid reasons to return this
+    # - avoid_setters_without_getters # not yet tested
+    - avoid_shadowing_type_parameters # not yet tested
+    - avoid_single_cascade_in_expression_statements # not yet tested
+    - avoid_slow_async_io
+    - avoid_types_as_parameter_names
+    - avoid_types_on_closure_parameters # conflicts with always_specify_types
+    - avoid_unnecessary_containers
+    - avoid_unused_constructor_parameters
+    - avoid_void_async
+    - await_only_futures
+    - camel_case_types
+    - camel_case_extensions
+    - cancel_subscriptions
+    - cascade_invocations # not yet tested
+    - close_sinks # not reliable enough
+    # - comment_references # blocked on https://github.com/flutter/flutter/issues/20765
+    - constant_identifier_names # needs an opt-out https://github.com/dart-lang/linter/issues/204
+    - control_flow_in_finally
+    - curly_braces_in_flow_control_structures # not yet tested
+    - directives_ordering
+    - deprecated_consistency
+    - empty_catches
+    - empty_constructor_bodies
+    - empty_statements
+    - exhaustive_cases
+    - file_names # not yet tested
+    # - flutter_style_todos
+    - hash_and_equals
+    - implementation_imports
+    # - invariant_booleans # too many false positives: https://github.com/dart-lang/linter/issues/811
+    - iterable_contains_unrelated_type
+    - join_return_with_assignment # not yet tested
+    - library_names
+    - library_prefixes
+    # - lines_longer_than_80_chars # not yet tested
+    - list_remove_unrelated_type
+    # - literal_only_boolean_expressions # too many false positives: https://github.com/dart-lang/sdk/issues/34181
+    - no_adjacent_strings_in_list
+    - no_duplicate_case_values
+    - no_logic_in_create_state
+    - no_leading_underscores_for_library_prefixes
+    - no_leading_underscores_for_local_identifiers
+    - non_constant_identifier_names
+    - null_check_on_nullable_type_parameter
+    # - null_closures  # not yet tested
+    - omit_local_variable_types # opposite of always_specify_types
+    # - one_member_abstracts # too many false positives
+    - only_throw_errors # https://github.com/flutter/flutter/issues/5792
+    - overridden_fields
+    - package_api_docs
+    - package_names
+    - package_prefixed_library_names
+    - parameter_assignments # we do this commonly
+    - prefer_adjacent_string_concatenation
+    - prefer_asserts_in_initializer_lists
+    - prefer_collection_literals
+    - prefer_conditional_assignment
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - prefer_constructors_over_static_methods # not yet tested
+    - prefer_equal_for_default_values
+    - prefer_contains
+    # - prefer_expression_function_bodies # conflicts with https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#consider-using--for-short-functions-and-methods
+    - prefer_final_in_for_each
+    - prefer_final_fields
+    - prefer_final_locals
+    - prefer_foreach
+    - prefer_function_declarations_over_variables
+    - prefer_generic_function_type_aliases
+    - eol_at_end_of_file
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_if_null_operators
+    - prefer_initializing_formals
+    - prefer_int_literals # not yet tested
+    - prefer_inlined_adds
+    - prefer_interpolation_to_compose_strings
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - prefer_is_not_operator
+    - prefer_iterable_whereType
+    - prefer_mixin # https://github.com/dart-lang/language/issues/32
+    - prefer_null_aware_operators # disable until NNBD, see https://github.com/flutter/flutter/pull/32711#issuecomment-492930932
+    - prefer_null_aware_method_calls 
+    - prefer_spread_collections
+    - prefer_single_quotes
+    - prefer_typing_uninitialized_variables
+    - prefer_void_to_null
+    # - public_member_api_docs # enabled on a case-by-case basis; see e.g. packages/analysis_options.yaml
+    - missing_whitespace_between_adjacent_strings
+    - leading_newlines_in_multiline_strings
+    - recursive_getters
+    - slash_for_doc_comments
+    - sized_box_for_whitespace
+    - sized_box_shrink_expand
+    - sort_child_properties_last
+    - sort_constructors_first
+    - sort_pub_dependencies
+    - sort_unnamed_constructors_first
+    # - super_goes_last # no longer needed w/ Dart 2
+    - test_types_in_equals
+    - throw_in_finally
+    - type_init_formals
+    # - unawaited_futures # too many false positives
+    - unnecessary_await_in_return # in test
+    - unnecessary_brace_in_string_interps
+    - unnecessary_const
+    - unnecessary_getters_setters
+    - unnecessary_lambdas # has false positives: https://github.com/dart-lang/linter/issues/498
+    - unnecessary_new
+    - unnecessary_null_aware_assignments
+    - unnecessary_null_in_if_null_operators
+    - unnecessary_overrides
+    - unnecessary_null_checks
+    - unnecessary_raw_strings
+    - unnecessary_string_interpolations
+    - unnecessary_parenthesis
+    - unnecessary_statements
+    - unnecessary_this
+    - unrelated_type_equality_checks
+    - use_function_type_syntax_for_parameters
+    - use_rethrow_when_possible
+    - use_key_in_widget_constructors
+    - use_colored_box
+    - use_decorated_box
+    - use_full_hex_values_for_flutter_colors
+    - use_if_null_to_convert_nulls_to_bools
+    - use_is_even_rather_than_modulo
+    - use_named_constants
+    - cast_nullable_to_non_nullable
+    - noop_primitive_operations
+    # - use_setters_to_change_properties # not yet tested
+    # - use_string_buffers # has false positives: https://github.com/dart-lang/sdk/issues/34182
+    # - use_to_and_as_if_applicable # has false positives, so we prefer to catch this by code-review
+    - valid_regexps
+    - void_checks # not yet tested
+    - unnecessary_constructor_name
+    - unnecessary_late
+    - unnecessary_nullable_for_final_variable_declarations
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 15
+    number-of-parameters: 10
+    lines-of-code: 200
+    maximum-nesting-level: 5
+    acceptable-level: 2
+  metrics-exclude:
+    - test/**
+  rules:
+    - avoid-shrink-wrap-in-lists
+    # - avoid-dynamic // enable later
+    - newline-before-return
+    - no-boolean-literal-compare
+    - prefer-trailing-comma
+    - no-equal-then-else
+    - avoid-missing-enum-constant-in-map
+    - avoid-unused-parameters
+    - avoid-unnecessary-type-assertions
+    - binary-expression-operand-order
+    - double-literal-format
+    - no-boolean-literal-compare
+    - always-remove-listener
+    # - avoid-returning-widgets  //enable later
+    - avoid-unnecessary-setstate
+    - avoid-collection-methods-with-unrelated-types
+    # - avoid-global-state //enable later
+    - avoid-missing-enum-constant-in-map
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - prefer-match-file-name #// enable later
+    - avoid-expanded-as-spacer
+    - prefer-single-widget-per-file
+    - use-setstate-synchronously
+    - member-ordering:
+        alphabetize: false
+        order:
+          - constructors
+          - public-final-fields
+          - private-final-fields
+          - public-var-fields
+          - private-var-fields
+          - public-getters
+          - private-setters
+          - overriden-public-methods
+          - public-methods
+          - private-methods
+          - public-static-methods
+          - private-static-methods
+        widgets-order:
+          - constructors
+          - public-final-fields
+          - private-final-fields
+          - public-var-fields
+          - private-var-fields
+          - public-getters
+          - private-setters
+          - overriden-public-methods
+          - public-methods
+          - private-methods
+          - public-static-methods
+          - private-static-methods
+    - avoid-cascade-after-if-null
+    - prefer-iterable-of
+    - avoid-wrapping-in-padding
+    - avoid-redundant-async
+    - avoid-unnecessary-type-assertions
+    - prefer-correct-edge-insets-constructor
+    - prefer-extracting-callbacks: 
+        allowed-line-count: 4
+    - arguments-ordering:
+        child-last: true
+        builder-last: true
+    # - avoid-nested-conditional-expressions //enable later
+    - avoid-non-null-assertion #// enable later
+    - avoid-unnecessary-conditionals
+    - avoid-unnecessary-type-assertions
+    - avoid-unrelated-type-assertions
+    - avoid-unused-parameters
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - prefer-correct-identifier-length: 
+        exceptions: ['_', '__', '___']
+        max-identifier-length: 30
+        min-identifier-length: 2
+    - prefer-correct-type-name:
+        max-identifier-length: 30
+        min-identifier-length: 4
+    - prefer-enums-by-name
+    - prefer-iterable-of
+    - prefer-moving-to-variable: #// enable later
+        allowed-duplicated-chains: 3
+    # - prefer-static-class
+    - prefer-trailing-comma
+    - always-remove-listener
+    - avoid-border-all
+    - avoid-expanded-as-spacer
+    - avoid-shrink-wrap-in-lists
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - prefer-const-border-radius
+    - prefer-correct-edge-insets-constructor
+    - prefer-single-widget-per-file
+    - prefer-using-list-view
+    - use-setstate-synchronously
+
+  rules-exclude:
+    - lib/features
+    - no-empty-block
+    - prefer-conditional-expressions
+    # - prefer-extracting-callbacks
+    - avoid-passing-async-when-sync-expected
+    - avoid-non-ascii-symbols
+  anti-patterns:
+    - long-method
+    - long-parameter-list

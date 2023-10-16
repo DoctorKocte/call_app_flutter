@@ -1,55 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:open_ui/theme/models/mixed_color.dart';
 
 class BackgroundColors {
   const BackgroundColors({
-    required this.primary,
-    required this.secondary,
-    required this.contrast,
-    required this.shadow,
-    required this.primaryGrey,
-    required this.white40,
-    required this.failure,
-    required this.success
+    required this.main,
+    required this.white,
+    required this.black,
+    required this.lightGray,
+    required this.darkGray,
+    required this.disableGray,
+    required this.blue,
+    required this.darkBlue,
+    required this.success,
+    required this.danger,
+    required this.error,
+    required this.white16,
+    required this.white20,
+    required this.white25,
+    required this.white28,
+    required this.white30,
+    required this.white60
   });
 
-  factory BackgroundColors.light() => BackgroundColors(
-        primary: _primary.light,
-        secondary: _secondary.light,
-        contrast: _contrast.light,
-        shadow: _shadow.light,
-        primaryGrey: _primaryGrey.light,
-        white40: _white40,
+  factory BackgroundColors.light() => const BackgroundColors(
+        main: _main,
+        white: _white,
+        black: _black,
+        lightGray: _lightGray,
+        darkGray: _darkGray,
+        disableGray: _disableGray,
+        blue: _blue,
+        darkBlue: _darkBlue,
         success: _success,
-        failure: _failure
+        danger: _danger,
+        error: _error,
+        white16: _white16,
+        white20: _white20,
+        white25: _white25,
+        white28: _white28,
+        white30: _white30,
+        white60: _white60
   );
 
-  factory BackgroundColors.dark() => BackgroundColors(
-        primary: _primary.dark,
-        secondary: _secondary.dark,
-        contrast: _contrast.dark,
-        shadow: _shadow.dark,
-        primaryGrey: _primaryGrey.dark,
-        white40: _white40,
-        success: _success,
-        failure: _failure
-  );
-
-  final Color primary;
-  final Color secondary;
-  final Color contrast;
-  final Color shadow;
-  final Color primaryGrey;
-  final Color white40;
+  final Color main;
+  final Color white;
+  final Color black;
+  final Color lightGray;
+  final Color darkGray;
+  final Color disableGray;
+  final Color blue;
+  final Color darkBlue;
   final Color success;
-  final Color failure;
+  final Color danger;
+  final Color error;
+  final Color white16;
+  final Color white20;
+  final Color white25;
+  final Color white28;
+  final Color white30;
+  final Color white60;
 
-  static const MixedColor _primary = MixedColor(light: Colors.white, dark: Color.fromARGB(255, 38, 38, 38));
-  static const MixedColor _secondary = MixedColor(light: Color.fromARGB(255, 236, 236, 236), dark: Color.fromARGB(255, 26, 26, 26));
-  static const MixedColor _contrast = MixedColor(light: Colors.white, dark: Colors.black);
-  static const MixedColor _shadow = MixedColor(light: Colors.black38, dark: Colors.black54);
-  static const MixedColor _primaryGrey = MixedColor(light: Color.fromARGB(255, 180, 180, 180), dark: Color.fromARGB(255, 14, 14, 14));
-  static final Color _white40 = Colors.white.withAlpha(40);
-  static const Color _success = Color.fromARGB(255, 41, 77, 43);
-  static const Color _failure = Color.fromARGB(255, 80, 39, 37);
+  static const Color _main = Color.fromRGBO(235, 241, 245, 1);
+  static const Color _white =Colors.white;
+  static const Color _black = Colors.black;
+  static const Color _lightGray = Color.fromRGBO(216, 226, 235, 1);
+  static const Color _darkGray = Color.fromRGBO(204, 213, 221, 1);
+  static const Color _disableGray = Color.fromRGBO(208, 220, 228, 1);
+  static const Color _blue = Color.fromRGBO(44, 102, 189, 1);
+  static const Color _darkBlue = Color.fromRGBO(26, 66, 124, 1);
+  //static const Color _shadow = Color.fromRGBO(0, 31, 61, 4);
+  static const Color _success = Color.fromRGBO(120, 181, 119, 1);
+  static const Color _danger = Color.fromRGBO(191, 88, 88, 1);
+  static const Color _error = Color.fromRGBO(224, 37, 68, 1);
+  static const Color _white16 = Color.fromRGBO(255, 255, 255, 0.16);
+  static const Color _white20 = Color.fromRGBO(255, 255, 255, 0.2);
+  static const Color _white25 = Color.fromRGBO(255, 255, 255, 0.25);
+  static const Color _white28 = Color.fromRGBO(255, 255, 255, 0.28);
+  static const Color _white30 = Color.fromRGBO(255, 255, 255, 0.3);
+  static const Color _white60 = Color.fromRGBO(255, 255, 255, 0.6);
 }

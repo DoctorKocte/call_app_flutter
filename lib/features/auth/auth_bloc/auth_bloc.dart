@@ -14,14 +14,50 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
     Emitter<AuthState> emit,
   ) async {
-      if (event is AuthLoginEvent) {
-        emit(AuthLoadingState());
-        final result = await authRepository.login(username: event.username, password: event.password);
+    if (event is AuthLoginEvent) {
+      emit(AuthLoadingState());
+      final result = await authRepository.login(
+          username: event.username, password: event.password);
 
-        result.fold(
-          (l) => emit(AuthErrorState(errorString: l)),
-          (r) => emit(AuthAuthorizedState(tokenModel: r)),
-        );
+      result.fold(
+        (l) => emit(AuthErrorState(errorString: l)),
+        (r) => emit(AuthAuthorizedState(tokenModel: r)),
+      );
+    }
+
+    if (event is AuthRegisterEvent) {
+      emit(AuthLoadingState());
+      final result = await authRepository.register(
+          username: event.username,
+          password: event.password,
+          phoneNumber: event.phoneNumber,
+          firstName: event.firstName,
+          lastName: event.lastName);
+
+      result.fold(
+        (l) => emit(AuthErrorState(errorString: l)),
+        (r) => emit(AuthAuthorizedState(tokenModel: r)),
+      );
     }
   }
+
+  // Future<void> _register(
+  //   AuthEvent event,
+  //   Emitter<AuthState> emit,
+  // ) async {
+  //   if (event is AuthRegisterEvent) {
+  //     emit(AuthLoadingState());
+  //     final result = await authRepository.register(
+  //         username: event.username,
+  //         password: event.password,
+  //         phoneNumber: event.phoneNumber,
+  //         firstName: event.firstName,
+  //         lastName: event.lastName);
+
+  //     result.fold(
+  //       (l) => emit(AuthErrorState(errorString: l)),
+  //       (r) => emit(AuthAuthorizedState(tokenModel: r)),
+  //     );
+  //   }
+  // }
 }

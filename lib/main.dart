@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
     return AdaptiveTheme(
       builder: (context, theme) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const LoginScreen(),
+        home: LoginScreen(),
         theme: theme.materialTheme
       ));
   }

@@ -38,7 +38,8 @@ flutter:
   fonts:
     - family: Graphik
       fonts:
-        - asset: assets/fonts/Graphik.ttf
+        - asset: assets/fonts/GraphikLCG-Medium.otf
+        - asset: assets/fonts/GraphikLCG-Regular.otf
 
 flutter_gen:
   output: lib/assets/

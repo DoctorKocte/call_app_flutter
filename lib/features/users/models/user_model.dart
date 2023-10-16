@@ -12,7 +12,8 @@ class User {
   factory User.fromDTO({required UserDTO dto}) {
     return User(
         id: dto.id,
-        firstName: dto.firstName ?? dto.username,
+        firstName: dto.firstName ?? '', 
+        //?? dto.username,
         lastName: dto.lastName ?? '',
         phoneNumber: dto.phoneNumber,
         imageString: dto.imageString

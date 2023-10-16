@@ -1,5 +1,6 @@
 enum ApiService {
     getUsers,
+    register,
     login;
 
     String get baseEndpoint => 'https://super-mybg.onrender.com';
@@ -11,11 +12,14 @@ enum ApiService {
           return '$baseEndpoint$auth/users';
         case ApiService.login:
           return '$baseEndpoint$auth/login';
+        case ApiService.register:
+          return '$baseEndpoint$auth/registration';
       }
     }
 }
 
 class EndpointConfig {
     String get getUsersEndpoint => ApiService.getUsers.endpoint;
-    String get loginEndpoint => ApiService.login.endpoint;
+    String get loginEndpoint => ApiService.login.endpoint;  
+    String get registerEndpoint => ApiService.register.endpoint;
 }

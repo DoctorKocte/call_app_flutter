@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:open_ui/open_ui.dart';
 
 //enum TextFieldType { username, password }
 
 class InputTextField extends StatefulWidget {
-  const InputTextField({
-      required this.textFieldTitle,
+  const InputTextField(
+      {required this.textFieldTitle,
       required this.onChanged,
-       //required this.type,
+      //required this.type,
       this.isObscureTextNeeded = false,
-      super.key
-    });
+      super.key});
 
   final String textFieldTitle;
   //final TextFieldType type;
@@ -38,45 +38,74 @@ class _InputTextFieldState extends State<InputTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    //  Form(
-    //     key: _formKey,
-    //     child:
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Center(
-              child: TextFormField(
-            obscureText: widget.isObscureTextNeeded,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: widget.textFieldTitle,
-            ),
-            controller: _controller,
-            onChanged: widget.onChanged,
-            //inputFormatters: [],
-            // Не смогла разобраться с валидацией до конца
-            // _formKey.currentState!.validate(); },
-            // _formKey.currentState!.validate() ? widget.onChanged : ((_) {}),
-            //  (_) {
-            //   //if (_formKey.currentState!.validate()) {
-            //      widget.onChanged;
-            //  // }
-            // },
-            // validator: (String? value) {
-            //     if (widget.type == TextFieldType.username) {
-            //        if (value == null || value.isEmpty) {
-            //           return "Please enter username.";
-            //         }
-            //     }
-            //     if (widget.type == TextFieldType.password) {
-            //         if (value == null || value.isEmpty) {
-            //           return "Please enter password.";
-            //      }
-            //     }
-            //     widget.onChanged;
-            // }
-          )),
-        //)
-        );
+    final appTheme = AppTheme.of(context);
+    final colorScheme = appTheme.colorScheme;
+
+    return 
+      Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: colorScheme.background.white,
+              ),
+              height: 64
+          ),
+                  SizedBox(height: 34, child: 
+                  TextFormField(
+                    obscureText: widget.isObscureTextNeeded,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: colorScheme.background.white,
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      labelText: widget.textFieldTitle,
+                      floatingLabelStyle:
+                          TextStyle(color: colorScheme.textColor.secondary),
+                      suffixIcon: _controller.text.isEmpty ? null : IconButton(
+                        highlightColor: Colors.transparent,
+                        onPressed: () {
+                          setState(() {
+                             _controller.text = '';
+                          });
+                        },
+                        icon: const Icon(Icons.close_rounded),
+                      ),
+                    ),
+                    controller: _controller,
+                    onChanged: widget.onChanged,
+                    //inputFormatters: [],
+                    // Не смогла разобраться с валидацией до конца
+                    // _formKey.currentState!.validate(); },
+                    // _formKey.currentState!.validate() ? widget.onChanged : ((_) {}),
+                    //  (_) {
+                    //   //if (_formKey.currentState!.validate()) {
+                    //      widget.onChanged;
+                    //  // }
+                    // },
+                    // validator: (String? value) {
+                    //     if (widget.type == TextFieldType.username) {
+                    //        if (value == null || value.isEmpty) {
+                    //           return "Please enter username.";
+                    //         }
+                    //     }
+                    //     if (widget.type == TextFieldType.password) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return "Please enter password.";
+                    //      }
+                    //     }
+                    //     widget.onChanged;
+                    // }
+     ) )]),
+      //)
+    );
   }
 }

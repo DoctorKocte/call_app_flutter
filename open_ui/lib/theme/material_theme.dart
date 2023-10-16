@@ -19,7 +19,7 @@ class MaterialTheme {
     required AppColorScheme colorScheme,
     required Brightness brightness,
   }) {
-    final backgroundColor = colorScheme.background.primary;
+    final backgroundColor = colorScheme.background.main;
     final isBrightnessLight = brightness == Brightness.light;
     final brightnessTheme = isBrightnessLight ? Brightness.dark : Brightness.light;
 
@@ -33,6 +33,10 @@ class MaterialTheme {
     );
 
     return ThemeData(
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: colorScheme.background.darkBlue, 
+        selectionColor: colorScheme.background.lightGray
+      ),
       useMaterial3: true,
       brightness: brightness,
       splashColor: Colors.transparent,

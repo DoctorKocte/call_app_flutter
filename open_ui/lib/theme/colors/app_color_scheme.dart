@@ -19,8 +19,8 @@ class AppColorScheme {
   );
 
   factory AppColorScheme.dark() => AppColorScheme(
-    background: BackgroundColors.dark(),
-    textColor: TextColors.dark(),
+    background: BackgroundColors.light(),
+    textColor: TextColors.light(),
     gradients: GradientColors.dark(),
     icons: IconColors.dark()
   );

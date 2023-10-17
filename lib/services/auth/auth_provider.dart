@@ -9,6 +9,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
+  String token = '';
+
 class AuthProvider {
   EndpointConfig endpointConfig = EndpointConfig();
 
@@ -25,6 +27,7 @@ class AuthProvider {
       if (tokenData.data != null) {
         final tokenDTO = TokenDTO.fromJson(tokenData.data!);
         final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
+        token = tokenModel.accessToken;
         return Right(tokenModel);
       } else {
         return const Left('Error login');

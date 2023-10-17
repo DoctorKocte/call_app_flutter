@@ -1,7 +1,7 @@
 class ApiResponse {
   ApiResponse({required this.success, this.data, this.message});
 
-  factory ApiResponse.parseBody(Map<String, dynamic> data) {
+  factory ApiResponse.parseBody(Map<dynamic, dynamic> data) {
     return ApiResponse(
       success: data['success'],
       data: data['data'],

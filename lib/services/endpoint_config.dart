@@ -1,4 +1,5 @@
 enum ApiService {
+    getUserData,
     getUsers,
     register,
     login;
@@ -14,6 +15,8 @@ enum ApiService {
           return '$baseEndpoint$auth/login';
         case ApiService.register:
           return '$baseEndpoint$auth/registration';
+        case ApiService.getUserData:
+          return '$baseEndpoint$auth/getUserData';
       }
     }
 }
@@ -22,4 +25,5 @@ class EndpointConfig {
     String get getUsersEndpoint => ApiService.getUsers.endpoint;
     String get loginEndpoint => ApiService.login.endpoint;  
     String get registerEndpoint => ApiService.register.endpoint;
+    String get userDataEndpoint => ApiService.getUserData.endpoint;
 }

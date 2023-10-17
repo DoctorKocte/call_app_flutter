@@ -1,10 +1,13 @@
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/features/main/favorite_card.dart';
+import 'package:call_app/features/main/models/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
 class CardsScrollView extends StatefulWidget {
-  const CardsScrollView({super.key});
+  const CardsScrollView({required this.contacts, super.key});
+
+  final List<Contact> contacts;
 
   @override
   State<CardsScrollView> createState() => _CardsScrollViewState();
@@ -16,6 +19,13 @@ class _CardsScrollViewState extends State<CardsScrollView> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final gradients = [
+      colorScheme.gradients.purple,
+      colorScheme.gradients.blue,
+      colorScheme.gradients.red,
+      colorScheme.gradients.pink,
+      colorScheme.gradients.green
+    ];
     
     return RotatedBox(
         quarterTurns: 3,
@@ -30,7 +40,7 @@ class _CardsScrollViewState extends State<CardsScrollView> {
             childCount: 5,
             builder: (context, index) => Padding(padding: EdgeInsets.symmetric(horizontal: 20), child:  RotatedBox(
                       quarterTurns: 1,
-                      child: FavoriteCard())),
+                      child: FavoriteCard(backgroundGradient: gradients[index], contact: widget.contacts[index],))),
           ),
           //squeeze: 1.1,
           onSelectedItemChanged: (index) {},

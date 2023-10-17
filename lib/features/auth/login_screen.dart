@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
               toolbarHeight: 0,
               surfaceTintColor: Colors.transparent,
               backgroundColor: Colors.transparent,
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),
             ),
             backgroundColor: colorScheme.background.main,
             body: SingleChildScrollView(

@@ -73,8 +73,8 @@ class _MainScreenState extends State<MainScreen> {
                             fontWeight: FontWeight.bold,
                             color: colorScheme.textColor.black))),
                 SizedBox(
-                    height: MediaQuery.of(context).size.height / 2.3,
-                    child: CardsScrollView()),
+                    height: 366, // MediaQuery.of(context).size.height / 2.3,
+                    child: CardsScrollView(contacts: state.userData.contacts,)),
                 SizedBox(height: 32),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),

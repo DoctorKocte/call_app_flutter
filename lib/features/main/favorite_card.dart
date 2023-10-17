@@ -1,10 +1,14 @@
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/assets/fonts.gen.dart';
+import 'package:call_app/features/main/models/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
 class FavoriteCard extends StatefulWidget {
-  const FavoriteCard({super.key});
+  const FavoriteCard({required this.backgroundGradient, required this.contact, super.key});
+
+  final List<Color> backgroundGradient;
+  final Contact contact;
 
   @override
   State<FavoriteCard> createState() => _FavoriteCardState();
@@ -19,7 +23,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
     return Stack(children: [
       Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: colorScheme.gradients.gold),
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: widget.backgroundGradient),
           borderRadius: BorderRadius.circular(16),
           )
       ),
@@ -36,7 +40,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                     image: DecorationImage(
                         image: Assets.images.addFriend.provider()))),
             SizedBox(height: 48),
-            Text('Emmochka', style: TextStyle(
+            Text(widget.contact.username ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,

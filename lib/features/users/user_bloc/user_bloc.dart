@@ -11,25 +11,41 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   final UserRepository usersRepository;
 
-  Future<void> _onStarted(
+    Future<void> _onStarted(
     UserEvent event,
     Emitter<UserState> emit,
   ) async {
-    if (event is UserClearEvent) {
-      emit(UserEmptyState());
-    } else {
       emit(UserLoadingState());
       try {
-        final result = await usersRepository.getAllUsers();
-
+        final result = await usersRepository.getUserData();
 
         result.fold(
           (l) => emit(UserErrorState()),
-          (r) => emit(UserDataState(usersData: r))
+          (r) => emit(UserDataState(userData: r))
         );
       } catch (e) {
         emit(UserErrorState());
       }
-    }
   }
+
+  // Future<void> _onStarted(
+  //   UserEvent event,
+  //   Emitter<UserState> emit,
+  // ) async {
+  //   if (event is UserClearEvent) {
+  //     emit(UserEmptyState());
+  //   } else {
+  //     emit(UserLoadingState());
+  //     try {
+  //       final result = await usersRepository.();
+
+  //       result.fold(
+  //         (l) => emit(UserErrorState()),
+  //         (r) => emit(UserDataState(usersData: r))
+  //       );
+  //     } catch (e) {
+  //       emit(UserErrorState());
+  //     }
+  //   }
+  // }
 }

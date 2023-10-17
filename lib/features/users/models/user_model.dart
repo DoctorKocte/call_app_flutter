@@ -1,3 +1,4 @@
+import 'package:call_app/features/main/models/contact.dart';
 import 'package:call_app/features/users/dto/user_dto.dart';
 
 class User {
@@ -5,6 +6,7 @@ class User {
     required this.id, 
     required this.firstName, 
     required this.lastName, 
+    required this.contacts,
     this.phoneNumber,
     this.imageString
   });
@@ -16,7 +18,8 @@ class User {
         //?? dto.username,
         lastName: dto.lastName ?? '',
         phoneNumber: dto.phoneNumber,
-        imageString: dto.imageString
+        imageString: dto.imageString,
+        contacts: dto.contacts.map((contactDTO) => Contact.fromDTO(dto: contactDTO)).toList()
     );
   }
 
@@ -25,4 +28,5 @@ class User {
   String lastName;
   String? phoneNumber;
   String? imageString;
+  List<Contact> contacts;
 }

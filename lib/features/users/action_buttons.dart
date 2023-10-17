@@ -30,7 +30,7 @@ class ActionButtons extends StatelessWidget {
             ElevatedButton(
               style: style,
               onPressed: () {
-                userBloc.add(UserClearEvent());
+                //userBloc.add(UserClearEvent());
               },
               child: const Text('Clear'),
             ),

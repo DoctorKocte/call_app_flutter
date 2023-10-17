@@ -6,6 +6,7 @@ import 'package:call_app/features/auth/login_button.dart';
 import 'package:call_app/features/auth/registration/registration_screen.dart';
 import 'package:call_app/features/auth/segment_control.dart';
 import 'package:call_app/features/auth/text_field.dart';
+import 'package:call_app/features/main/main_screen.dart';
 import 'package:call_app/features/users/users_screen.dart';
 import 'package:call_app/services/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
@@ -276,7 +277,7 @@ class LoginView extends StatelessWidget {
           if (state is AuthAuthorizedState) {
             isLoginLoading.value = false;
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => MyHomePage()));
+                MaterialPageRoute(builder: (context) => MainScreen()));
           } else if (state is AuthErrorState) {
             isLoginLoading.value = false;
             showDialog(

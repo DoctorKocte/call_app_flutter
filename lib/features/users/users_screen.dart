@@ -22,7 +22,7 @@ class MyHomePage extends StatelessWidget {
           backgroundColor: Colors.transparent
         ),
         body: const Column(
-          children: [
+          children: [ 
             ActionButtons(),
             Expanded(
               child: UsersList()

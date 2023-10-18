@@ -1,10 +1,13 @@
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/assets/fonts.gen.dart';
+import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
 class ContactView extends StatefulWidget {
-  const ContactView({super.key});
+  const ContactView({required this.recentContact, super.key});
+
+  final RecentContact recentContact;
 
   @override
   State<ContactView> createState() => _ContactViewState();
@@ -16,7 +19,7 @@ class _ContactViewState extends State<ContactView> {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
 
-    return  Container(
+    return  DecoratedBox(
       decoration: BoxDecoration(
               color: colorScheme.background.white,
               borderRadius: BorderRadius.circular(16)),
@@ -33,7 +36,7 @@ class _ContactViewState extends State<ContactView> {
               image:
                   DecorationImage(image: Assets.images.addFriend.provider()))),
                   SizedBox(width: 20),
-      Text('Emmochka',
+      Text(widget.recentContact.contact.username ?? 'Emmochka',
           style: TextStyle(
               fontFamily: FontFamily.graphik,
               fontSize: 16,

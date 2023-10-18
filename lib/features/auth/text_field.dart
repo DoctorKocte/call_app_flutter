@@ -7,6 +7,7 @@ class InputTextField extends StatefulWidget {
   const InputTextField(
       {required this.textFieldTitle,
       required this.onChanged,
+      this.onClearButtonPressed,
       //required this.type,
       this.isObscureTextNeeded = false,
       super.key});
@@ -15,6 +16,7 @@ class InputTextField extends StatefulWidget {
   //final TextFieldType type;
   final bool isObscureTextNeeded;
   final void Function(String)? onChanged;
+  final void Function()? onClearButtonPressed;
 
   @override
   State<InputTextField> createState() => _InputTextFieldState();
@@ -72,9 +74,12 @@ class _InputTextFieldState extends State<InputTextField> {
                           TextStyle(color: colorScheme.textColor.secondary),
                       suffixIcon: _controller.text.isEmpty ? null : IconButton(
                         highlightColor: Colors.transparent,
-                        onPressed: () {
+                        onPressed:// widget.onClearButtonPressed,
+                         () {
                           setState(() {
-                             _controller.text = '';
+                             _controller.clear();
+                             // .text = '';
+                             //widget.onChanged;
                           });
                         },
                         icon: const Icon(Icons.close_rounded),

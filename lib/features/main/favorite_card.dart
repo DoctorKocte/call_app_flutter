@@ -25,6 +25,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
         decoration: BoxDecoration(
           gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: widget.backgroundGradient),
           borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 8)]
           )
       ),
       Padding(
@@ -40,20 +41,20 @@ class _FavoriteCardState extends State<FavoriteCard> {
                     image: DecorationImage(
                         image: Assets.images.addFriend.provider()))),
             SizedBox(height: 48),
-            Text(widget.contact.username ?? '', style: TextStyle(
+            Text(widget.contact.firstName ?? widget.contact.username ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color:
                                       colorScheme.textColor.white)),
             //SizedBox(height: 8),
-            Text('Huyemochka', style: TextStyle(
+            Text(widget.contact.lastName ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 24,
                                   color:
                                       colorScheme.textColor.white),),
             SizedBox(height: 20),
-            Text('dura zaebala zvonit', style: TextStyle(
+            Text(widget.contact.notice ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 14,
                                   color:

@@ -37,7 +37,7 @@ class _CardsScrollViewState extends State<CardsScrollView> {
           perspective: 0.002,
           physics: FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate(
-            childCount: 5,
+            childCount: widget.contacts.length,
             builder: (context, index) => Padding(padding: EdgeInsets.symmetric(horizontal: 20), child:  RotatedBox(
                       quarterTurns: 1,
                       child: FavoriteCard(backgroundGradient: gradients[index], contact: widget.contacts[index],))),

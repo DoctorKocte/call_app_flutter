@@ -7,21 +7,19 @@ class Contact {
     this.username,
     this.firstName, 
     this.lastName,
-    this.imageString
+    this.imageString,
+    this.notice
   });
 
- //factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
-
-  //Map<String, dynamic> toJson() => _$UserDTOToJson(this);
   factory Contact.fromDTO({required ContactDTO dto}) {
-    //log('USER MODEL: $json');
     return Contact(
       id: dto.id,
       username: dto.username,
       firstName: dto.firstName,
       lastName: dto.lastName,
       isFavorite: dto.isFavorite,
-      imageString: dto.imageString
+      imageString: dto.imageString,
+      notice: dto.notice
     );
   }
 
@@ -31,4 +29,5 @@ class Contact {
   String? lastName;
   bool isFavorite;
   String? imageString;
+  String? notice;
 }

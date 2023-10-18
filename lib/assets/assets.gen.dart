@@ -33,6 +33,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/fillStar.png
   AssetGenImage get fillStar => const AssetGenImage('assets/images/fillStar.png');
 
+  /// File path: assets/images/lock.png
+  AssetGenImage get lock => const AssetGenImage('assets/images/lock.png');
+
+  /// File path: assets/images/menu.png
+  AssetGenImage get menu => const AssetGenImage('assets/images/menu.png');
+
   /// File path: assets/images/noFavorites.png
   AssetGenImage get noFavorites => const AssetGenImage('assets/images/noFavorites.png');
 
@@ -48,6 +54,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/star.png
   AssetGenImage get star => const AssetGenImage('assets/images/star.png');
 
+  /// File path: assets/images/team.png
+  AssetGenImage get team => const AssetGenImage('assets/images/team.png');
+
+  /// File path: assets/images/teamwork.png
+  AssetGenImage get teamwork => const AssetGenImage('assets/images/teamwork.png');
+
   /// File path: assets/images/video.png
   AssetGenImage get video => const AssetGenImage('assets/images/video.png');
 
@@ -60,11 +72,15 @@ class $AssetsImagesGen {
         emptyScreen,
         end,
         fillStar,
+        lock,
+        menu,
         noFavorites,
         noRecents,
         profile,
         scan,
         star,
+        team,
+        teamwork,
         video
       ];
 }

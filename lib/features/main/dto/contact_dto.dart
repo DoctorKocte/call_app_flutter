@@ -1,52 +1,28 @@
-// public struct ContactDTO {
-//     public let id: String
-//     public let firstName: String?
-//     public let lastName: String?
-//     public let username: String
-//     public let imageString: String?
-//     public let isFavorite: Bool
-// }
+import 'package:json_annotation/json_annotation.dart';
+part 'contact_dto.g.dart';
 
-// extension ContactDTO: Codable {
-//     enum CodingKeys: String, CodingKey {
-//         case id = "_id"
-//         case firstName
-//         case lastName
-//         case username
-//         case imageString
-//         case isFavorite
-//     }
-// }
-
+@JsonSerializable()
 class ContactDTO {
   ContactDTO({
     required this.id, 
+    required this.isFavorite, 
     this.username,
     this.firstName, 
-    this.lastName, 
-    required this.isFavorite,
-    this.imageString
+    this.lastName,
+    this.imageString,
+    this.notice
   });
 
- //factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
+  factory ContactDTO.fromJson(Map<String, dynamic> json) => _$ContactDTOFromJson(json);
 
-  //Map<String, dynamic> toJson() => _$UserDTOToJson(this);
-  factory ContactDTO.fromJson(Map<String, dynamic> json) {
-    //log('USER MODEL: $json');
-    return ContactDTO(
-      id: json['_id'],
-      username: json['username'],
-      firstName: json['firstName'],
-      lastName: json['lastName'] ?? '',
-      isFavorite: json['isFavorite'],
-      imageString: json['imageString']
-    );
-  }
+  Map<String, dynamic> toJson() => _$ContactDTOToJson(this);
 
+@JsonKey(name: '_id')
   String id;
   String? username;
   String? firstName;
   String? lastName;
   bool isFavorite;
   String? imageString;
+  String? notice;
 }

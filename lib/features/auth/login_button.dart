@@ -39,7 +39,7 @@ class LoginButton extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: isLoading ? colorScheme.background.darkBlue : color,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: isLoading 
             ? Center(child: CircularProgressIndicator(color: colorScheme.background.white))

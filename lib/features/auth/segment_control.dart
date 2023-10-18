@@ -1,3 +1,4 @@
+import 'package:call_app/assets/fonts.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
@@ -39,7 +40,24 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             )));
   }
 
-  final _tabs = [Tab(text: 'Email'), Tab(text: 'Phone number')];
+  final _tabs = [
+    Tab(
+        child: Text('Username',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                height: 1,
+                fontFamily: FontFamily.graphik,
+                fontWeight: FontWeight.w600,
+                fontSize: 13))),
+    Tab(
+        child: Text('Phone number',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                height: 1,
+                fontFamily: FontFamily.graphik,
+                fontWeight: FontWeight.w600,
+                fontSize: 13)))
+  ];
 
   @override
   Widget build(BuildContext context) {

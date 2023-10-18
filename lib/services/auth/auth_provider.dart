@@ -7,21 +7,19 @@ import 'package:call_app/services/api_response_model.dart';
 import 'package:call_app/services/endpoint_config.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 
-  String token = '';
+String token = '';
 
 class AuthProvider {
   EndpointConfig endpointConfig = EndpointConfig();
 
-  Future<Either<String, TokenModel>> login({required String username, required String password}) async {
-    log('login pressed');
-    final response = await http.post(
-      Uri.parse(endpointConfig.loginEndpoint),
-      body: {'username': username, 'password': password}
-    );
-    log('${endpointConfig.loginEndpoint} ====> ${response.body}');
-    final tokenData = ApiResponse.parseBody(json.decode(response.body));
+  Future<Either<String, TokenModel>> login(
+      {required String username, required String password}) async {
+    final dio = Dio();
+    final response = await dio.post(endpointConfig.loginEndpoint,
+        data: {'username': username, 'password': password});
+    log('${endpointConfig.loginEndpoint} ====> ${response.data}');
+    final tokenData = ApiResponse.parseBody(response.data);
 
     if (tokenData.success) {
       if (tokenData.data != null) {
@@ -37,33 +35,21 @@ class AuthProvider {
     }
   }
 
-   Future<Either<String, TokenModel>> register({
-    required String username,
-    required String password, 
-    required String phoneNumber,
-    String? firstName,
-    String? lastName
-  }) async {
+  Future<Either<String, TokenModel>> register(
+      {required String username,
+      required String password,
+      required String phoneNumber,
+      String? firstName,
+      String? lastName}) async {
     final dio = Dio();
 
-    // final response = await http.post(
-    //   Uri.parse(endpointConfig.registerEndpoint),
-    //   body: {
-    //     'username': username, 
-    //     'password': password,
-    //     'phoneNumber': phoneNumber,
-    //     'firstName': firstName,
-    //     'lastName': lastName
-    //   }
-    // );
-
-  final response = await dio.post(endpointConfig.registerEndpoint, data: {
-        'username': username, 
-        'password': password,
-        'phoneNumber': phoneNumber,
-        'firstName': firstName,
-        'lastName': lastName
-      });
+    final response = await dio.post(endpointConfig.registerEndpoint, data: {
+      'username': username,
+      'password': password,
+      'phoneNumber': phoneNumber,
+      'firstName': firstName,
+      'lastName': lastName
+    });
     log('${endpointConfig.registerEndpoint} ====> ${response.data}');
     final tokenData = ApiResponse.parseBody(json.decode(response.data));
 

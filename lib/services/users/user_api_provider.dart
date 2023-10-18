@@ -36,35 +36,57 @@ class UserProvider {
   Future<Either<String, User>> getUserData() async {
      final dio = Dio();
 
-    final response = await http.get(
-      Uri.parse(endpointConfig.userDataEndpoint),
-      headers: {
-         'content-Type': 'application/json',
+     final response = await dio.get(endpointConfig.userDataEndpoint, 
+      options: Options(
+            headers: {
+              'content-Type': 'application/json',
               'accept': 'application/json',
               'authorization': 'Bearer $token'
-      }
-    );
+            },
+          ),
+     );
 
-    //  final response = await dio.get(endpointConfig.userDataEndpoint, 
-    //   options: Options(
-    //         headers: {
-    //           'content-Type': 'application/json',
-    //           'accept': 'application/json',
-    //           'authorization': 'Bearer $token'
-    //         },
-    //       ),
-    //  );
-
-     log('${endpointConfig.userDataEndpoint} ====> ${response.body}'); 
-print(json.decode(response.body));
-    final resp = json.decode(response.body);
-    final Map<String, dynamic> temp = json.decode(resp['data']);
-    final responseData = ApiResponse.parseBody(json.decode(temp['user']));
+     log('${endpointConfig.userDataEndpoint} ====> ${response.data}'); 
+     log('$response');
+     log('${response.data}');
+    //final temp = json.decode(resp['data']);
+    final responseData = ApiResponse.parseBody(response.data);
     if (responseData.success) {
       if (responseData.data != null) {
       final userDTO = UserDTO.fromJson(responseData.data!['user']);
       final user = User.fromDTO(dto: userDTO);
       return Right(user);
+    } else {
+      return throw Exception('Failed to load user: data null');
+    }
+    } else {
+      throw Exception('Failed to load user');
+    }
+  }
+
+    Future<Either<String, void>> changeProfileImage({required String imageString}) async {
+     final dio = Dio();
+
+     final response = await dio.post(
+      endpointConfig.changeProfileImageEndpoint, 
+      options: Options(
+            headers: {
+              'content-Type': 'application/json',
+              'accept': 'application/json',
+              'authorization': 'Bearer $token'
+            },
+          ),
+      data: {
+        'imageString': imageString
+      }
+     );
+
+     log('${endpointConfig.userDataEndpoint} ====> ${response.data}'); 
+    final responseData = ApiResponse.parseBody(response.data);
+    if (responseData.success) {
+      if (responseData.data != null) {
+
+      return Right();
     } else {
       return throw Exception('Failed to load user: data null');
     }

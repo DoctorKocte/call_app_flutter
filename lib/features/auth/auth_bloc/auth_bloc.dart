@@ -5,16 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepository}) : super(AuthLoadingState()) {
-    on<AuthEvent>(_login);
+    on<AuthLoginEvent>(_login);
+    on<AuthRegisterEvent>(_register);
   }
 
   final AuthRepository authRepository;
 
   Future<void> _login(
-    AuthEvent event,
+    AuthLoginEvent event,
     Emitter<AuthState> emit,
   ) async {
-    if (event is AuthLoginEvent) {
       emit(AuthLoadingState());
       final result = await authRepository.login(
           username: event.username, password: event.password);
@@ -23,9 +23,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (l) => emit(AuthErrorState(errorString: l)),
         (r) => emit(AuthAuthorizedState(tokenModel: r)),
       );
-    }
+  }
 
-    if (event is AuthRegisterEvent) {
+  Future<void> _register(
+    AuthRegisterEvent event,
+    Emitter<AuthState> emit,
+  ) async {
       emit(AuthLoadingState());
       final result = await authRepository.register(
           username: event.username,
@@ -38,26 +41,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (l) => emit(AuthErrorState(errorString: l)),
         (r) => emit(AuthAuthorizedState(tokenModel: r)),
       );
-    }
   }
-
-  // Future<void> _register(
-  //   AuthEvent event,
-  //   Emitter<AuthState> emit,
-  // ) async {
-  //   if (event is AuthRegisterEvent) {
-  //     emit(AuthLoadingState());
-  //     final result = await authRepository.register(
-  //         username: event.username,
-  //         password: event.password,
-  //         phoneNumber: event.phoneNumber,
-  //         firstName: event.firstName,
-  //         lastName: event.lastName);
-
-  //     result.fold(
-  //       (l) => emit(AuthErrorState(errorString: l)),
-  //       (r) => emit(AuthAuthorizedState(tokenModel: r)),
-  //     );
-  //   }
-  // }
 }

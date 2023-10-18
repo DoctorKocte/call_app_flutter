@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 32),
                           Text('To use your account,\nyou should log in first',
                               style: TextStyle(
+                                  height: 0.9,
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -99,8 +100,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             username: username,
                             password: password,
                             onChanged: (username, password) {
-                              this.username = username;
-                              this.password = password;
+                              setState(() {
+                                this.username = username;
+                                this.password = password;
+                              });
                             },
                           ),
                           const SizedBox(height: 56),
@@ -112,12 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return LoginButton(
                                   buttonText: 'Login',
                                   isLoading: isLoginLoading.value,
-                                  color: colorScheme.background.blue,
+                                  color: (username.isEmpty || password.isEmpty) ? colorScheme.background.disableGray : colorScheme.background.blue,
                                   textStyle: TextStyle(
                                     fontFamily: FontFamily.graphik,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 15,
-                                    color: colorScheme.textColor.white,
+                                    color: (username.isEmpty || password.isEmpty) ? colorScheme.textColor.disableSecondary : colorScheme.textColor.white,
                                   ),
                                   onPressed: () {
                                     if (isLoginLoading.value) {
@@ -140,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text('or',
                                   style: TextStyle(
                                     fontFamily: FontFamily.graphik,
-                                    fontWeight: FontWeight.bold,
+                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
                                     color:
                                         colorScheme.textColor.disableSecondary,
@@ -150,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text('Sign in with Google or Facebook',
                                   style: TextStyle(
                                     fontFamily: FontFamily.graphik,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 15,
                                     color:
                                         colorScheme.textColor.disableSecondary,
@@ -247,6 +250,9 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
           widget.username = value;
           widget.onChanged(widget.username, widget.password);
         },
+        onClearButtonPressed: () {
+          widget.username = '';
+        },
       ),
       SizedBox(height: 24),
       InputTextField(
@@ -259,6 +265,9 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
           // });
           widget.password = value;
           widget.onChanged(widget.username, widget.password);
+        },
+        onClearButtonPressed: () {
+          widget.password = '';
         },
       )
     ]);

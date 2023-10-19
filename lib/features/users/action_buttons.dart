@@ -1,5 +1,5 @@
-import 'package:call_app/features/users/user_bloc/user_bloc.dart';
-import 'package:call_app/features/users/user_bloc/user_event.dart';
+import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
+import 'package:call_app/features/main/presentation/bloc/user_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

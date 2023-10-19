@@ -1,25 +1,32 @@
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_bloc.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_event.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_state.dart';
-import 'package:call_app/features/auth/login_button.dart';
-import 'package:call_app/features/auth/text_field.dart';
-import 'package:call_app/features/users/users_screen.dart';
-import 'package:call_app/services/auth/auth_repository.dart';
+import 'package:call_app/components/primary_button.dart';
+import 'package:call_app/components/text_field.dart';
+import 'package:call_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:call_app/features/auth/domain/service/auth_service.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:call_app/features/main/presentation/main_screen.dart';
+import 'package:call_app/network/request_service.dart';
+import 'package:call_app/services/endpoint_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_ui/open_ui.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  const RegistrationScreen({required this.requestService, required this.endpointConfig, super.key});
 
+  final RequestService requestService;
+  final EndpointConfig endpointConfig;
+  
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final authRepository = AuthRepository();
+
+  late AuthService authService;
 
   String username = '';
   String password = '';
@@ -31,7 +38,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void initState() {
-     super.initState();
+    authService = AuthService(authRepository: AuthRepository(requestService: widget.requestService, endpointConfig: widget.endpointConfig));
+    super.initState();
   }
 
   @override
@@ -44,9 +52,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    
 
     return BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(authRepository: authRepository),
+        create: (context) => AuthBloc(authService: authService),
         child: Scaffold(
             appBar: AppBar(
               foregroundColor: Colors.black,
@@ -130,12 +139,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         },
                       ),
                       const SizedBox(height: 44),
-                      RegistrationView(isLoginLoading: isLoginLoading),
+                      RegistrationView(isLoginLoading: isLoginLoading, requestService: widget.requestService, endpointConfig: widget.endpointConfig,),
                       ValueListenableBuilder(
                         valueListenable: isLoginLoading,
                         builder: (context, value, child) {
                           return Builder(builder: (context) {
-                            return LoginButton(
+                            return PrimaryButton(
                               buttonText: 'Register',
                               isLoading: isLoginLoading.value,
                               color: colorScheme.background.blue,
@@ -165,7 +174,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         },
                       ),
                     const SizedBox(height: 24),
-                    LoginButton(
+                    PrimaryButton(
                                 buttonText: 'Sign Up with Google',
                                 color: colorScheme.background.lightGray,
                                 textStyle: TextStyle(
@@ -182,9 +191,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 }
 
 class RegistrationView extends StatelessWidget {
-  const RegistrationView({required this.isLoginLoading, super.key});
+  const RegistrationView({required this.isLoginLoading, required this.requestService, required this.endpointConfig, super.key});
 
   final ValueNotifier<bool> isLoginLoading;
+  final RequestService requestService;
+  final EndpointConfig endpointConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +204,7 @@ class RegistrationView extends StatelessWidget {
           if (state is AuthAuthorizedState) {
             isLoginLoading.value = false;
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => MyHomePage()));
+                MaterialPageRoute(builder: (context) => MainScreen(requestService: requestService, endpointConfig: endpointConfig,)));
           } else if (state is AuthErrorState) {
             isLoginLoading.value = false;
             showDialog(

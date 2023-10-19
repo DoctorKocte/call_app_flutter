@@ -1,30 +1,43 @@
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/main/cards_scroll_view.dart';
-import 'package:call_app/features/main/contacts_list.dart';
-import 'package:call_app/features/main/favorite_card.dart';
-import 'package:call_app/features/profile/profile_screen.dart';
-import 'package:call_app/features/users/action_buttons.dart';
+import 'package:call_app/features/main/domain/repository/user_repository.dart';
+import 'package:call_app/features/main/domain/service/user_service.dart';
+import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
+import 'package:call_app/features/main/presentation/bloc/user_state.dart';
+import 'package:call_app/features/main/presentation/cards_scroll_view.dart';
+import 'package:call_app/features/main/presentation/contacts_list.dart';
+import 'package:call_app/features/profile/presentation/profile_screen.dart';
 import 'package:call_app/features/users/models/user_model.dart';
-import 'package:call_app/features/users/user_bloc/user_bloc.dart';
-import 'package:call_app/features/users/user_bloc/user_state.dart';
-import 'package:call_app/features/users/users_list.dart';
-import 'package:call_app/services/users/user_repository.dart';
+import 'package:call_app/network/request_service.dart';
+import 'package:call_app/services/endpoint_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_ui/open_ui.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen(
+      {required this.requestService, required this.endpointConfig, super.key});
+
+  final RequestService requestService;
+  final EndpointConfig endpointConfig;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final usersRepository = UserRepository();
+  late UserService userService;
 
   User? userData;
+
+  @override
+  void initState() {
+    userService = UserService(
+        userRepository: UserRepository(
+            requestService: widget.requestService,
+            endpointConfig: widget.endpointConfig));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = appTheme.colorScheme;
 
     return BlocProvider<UserBloc>(
-        create: (context) => UserBloc(usersRepository: usersRepository),
+        create: (context) => UserBloc(userService: userService),
         child: Scaffold(
             backgroundColor: colorScheme.background.main,
             appBar: AppBar(
@@ -50,9 +63,14 @@ class _MainScreenState extends State<MainScreen> {
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
                 leading: Padding(
                     padding: EdgeInsets.all(16),
-                    child: GestureDetector(onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen(userData: userData!)));
-                    }, child: Image.asset('assets/images/menu.png'))),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ProfileScreen(
+                                  userData: userData!,
+                                  userService: userService)));
+                        },
+                        child: Image.asset('assets/images/menu.png'))),
                 actions: <Widget>[
                   Padding(
                       padding: EdgeInsets.all(16),
@@ -109,7 +127,6 @@ class _MainScreenState extends State<MainScreen> {
                                             fontWeight: FontWeight.w600,
                                             color:
                                                 colorScheme.textColor.black)),
-                                    //Spacer(),
                                     Text('All',
                                         style: TextStyle(
                                             fontFamily: FontFamily.graphik,

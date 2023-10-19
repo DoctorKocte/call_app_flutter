@@ -47,7 +47,6 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                   fontWeight: FontWeight.bold,
                                   color:
                                       colorScheme.textColor.white)),
-            //SizedBox(height: 8),
             Text(widget.contact.lastName ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,
                                   fontSize: 24,

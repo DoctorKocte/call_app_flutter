@@ -1,6 +1,5 @@
-import 'package:call_app/assets/assets.gen.dart';
-import 'package:call_app/features/main/favorite_card.dart';
 import 'package:call_app/features/main/models/contact.dart';
+import 'package:call_app/features/main/presentation/favorite_card.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
@@ -35,10 +34,10 @@ class _CardsScrollViewState extends State<CardsScrollView> {
           offAxisFraction: 1,
           // 0 - 0.1
           perspective: 0.002,
-          physics: FixedExtentScrollPhysics(),
+          physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate(
             childCount: widget.contacts.length,
-            builder: (context, index) => Padding(padding: EdgeInsets.symmetric(horizontal: 20), child:  RotatedBox(
+            builder: (context, index) => Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child:  RotatedBox(
                       quarterTurns: 1,
                       child: FavoriteCard(backgroundGradient: gradients[index], contact: widget.contacts[index],))),
           ),

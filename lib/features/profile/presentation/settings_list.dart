@@ -1,5 +1,5 @@
 import 'package:call_app/features/profile/models/setting_model.dart';
-import 'package:call_app/features/profile/setting_view.dart';
+import 'package:call_app/features/profile/presentation/setting_view.dart';
 import 'package:flutter/material.dart';
 
 class SettingsList extends StatefulWidget {

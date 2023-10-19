@@ -1,5 +1,5 @@
-import 'package:call_app/features/main/contact_view.dart';
 import 'package:call_app/features/main/models/recent_contact.dart';
+import 'package:call_app/features/main/presentation/contact_view.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatefulWidget {

@@ -1,14 +1,16 @@
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_bloc.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_event.dart';
-import 'package:call_app/features/auth/auth_bloc/auth_state.dart';
-import 'package:call_app/features/auth/login_button.dart';
-import 'package:call_app/features/auth/registration/registration_screen.dart';
-import 'package:call_app/features/auth/segment_control.dart';
-import 'package:call_app/features/auth/text_field.dart';
-import 'package:call_app/features/main/main_screen.dart';
-import 'package:call_app/features/users/users_screen.dart';
-import 'package:call_app/services/auth/auth_repository.dart';
+import 'package:call_app/components/primary_button.dart';
+import 'package:call_app/components/segment_control.dart';
+import 'package:call_app/components/text_field.dart';
+import 'package:call_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:call_app/features/auth/domain/service/auth_service.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:call_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:call_app/features/auth/presentation/registration/registration_screen.dart';
+import 'package:call_app/features/main/presentation/main_screen.dart';
+import 'package:call_app/network/request_service.dart';
+import 'package:call_app/services/endpoint_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,20 +24,31 @@ enum LoginType {
 }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({required this.requestService, required this.endpointConfig, super.key});
+
+  final RequestService requestService;
+  final EndpointConfig endpointConfig;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final authRepository = AuthRepository();
+  //final authRepository = AuthRepository();
+  late AuthService authService;
 
   String username = '';
   String password = '';
   bool isLoading = false;
   LoginType selectedLoginType = LoginType.email;
   ValueNotifier<bool> isLoginLoading = ValueNotifier(false);
+
+
+  @override
+  void initState() {
+    authService = AuthService(authRepository: AuthRepository(requestService: widget.requestService, endpointConfig: widget.endpointConfig));
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -49,13 +62,13 @@ class _LoginScreenState extends State<LoginScreen> {
     final colorScheme = appTheme.colorScheme;
 
     return BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(authRepository: authRepository),
+        create: (context) => AuthBloc(authService: authService),
         child: Scaffold(
             appBar: AppBar(
               toolbarHeight: 0,
               surfaceTintColor: Colors.transparent,
               backgroundColor: Colors.transparent,
-            systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),
+            systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),
             ),
             backgroundColor: colorScheme.background.main,
             body: SingleChildScrollView(
@@ -82,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       colorScheme.textColor.disableSecondary)),
                           const SizedBox(height: 56),
                           MyStatefulWidget(
+                            tabsTitles: const ['Username', 'Phone number'],
                             onTap: (tabIndex) {
                               if (tabIndex == LoginType.email.intValue) {
                                 setState(() {
@@ -107,12 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           const SizedBox(height: 56),
-                          LoginView(isLoginLoading: isLoginLoading),
+                          LoginView(isLoginLoading: isLoginLoading, requestService: widget.requestService, endpointConfig: widget.endpointConfig,),
                           ValueListenableBuilder(
                             valueListenable: isLoginLoading,
                             builder: (context, value, child) {
                               return Builder(builder: (context) {
-                                return LoginButton(
+                                return PrimaryButton(
                                   buttonText: 'Login',
                                   isLoading: isLoginLoading.value,
                                   color: (username.isEmpty || password.isEmpty) ? colorScheme.background.disableGray : colorScheme.background.blue,
@@ -161,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 30),
                           Row(children: [
                             Expanded(
-                                child: LoginButton(
+                                child: PrimaryButton(
                                     buttonText: 'Facebook',
                                     color: colorScheme.background.lightGray,
                                     textStyle: TextStyle(
@@ -173,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     onPressed: () {})),
                             const SizedBox(width: 16),
                             Expanded(
-                                child: LoginButton(
+                                child: PrimaryButton(
                                     buttonText: 'Google',
                                     color: colorScheme.background.lightGray,
                                     textStyle: TextStyle(
@@ -201,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const RegistrationScreen()));
+                                                  RegistrationScreen(requestService: widget.requestService, endpointConfig: widget.endpointConfig,)));
                                     },
                                     child: Text('Sign up',
                                         style: TextStyle(
@@ -248,7 +262,7 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
           widget.username = '';
         },
       ),
-      SizedBox(height: 24),
+      const SizedBox(height: 24),
       InputTextField(
         textFieldTitle: 'Password',
         //type: TextFieldType.password,
@@ -269,9 +283,11 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
 }
 
 class LoginView extends StatelessWidget {
-  const LoginView({required this.isLoginLoading, super.key});
+  const LoginView({required this.isLoginLoading, required this.requestService, required this.endpointConfig, super.key});
 
   final ValueNotifier<bool> isLoginLoading;
+  final RequestService requestService;
+  final EndpointConfig endpointConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +296,7 @@ class LoginView extends StatelessWidget {
           if (state is AuthAuthorizedState) {
             isLoginLoading.value = false;
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => MainScreen()));
+                MaterialPageRoute(builder: (context) => MainScreen(requestService: requestService, endpointConfig: endpointConfig)));
           } else if (state is AuthErrorState) {
             isLoginLoading.value = false;
             showDialog(

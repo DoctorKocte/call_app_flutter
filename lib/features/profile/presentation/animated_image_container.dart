@@ -2,20 +2,21 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/profile/user_update_bloc/user_update_bloc.dart';
-import 'package:call_app/features/profile/user_update_bloc/user_update_event.dart';
-import 'package:call_app/features/profile/user_update_bloc/user_update_state.dart';
+import 'package:call_app/features/main/domain/service/user_service.dart';
+import 'package:call_app/features/profile/presentation/bloc/user_update_bloc.dart';
+import 'package:call_app/features/profile/presentation/bloc/user_update_event.dart';
+import 'package:call_app/features/profile/presentation/bloc/user_update_state.dart';
 import 'package:call_app/features/users/models/user_model.dart';
-import 'package:call_app/services/users/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_ui/open_ui.dart';
 
 class AnimatedImageContainer extends StatefulWidget {
-  const AnimatedImageContainer({required this.userData, super.key});
+  const AnimatedImageContainer({required this.userData, required this.userService, super.key});
 
   final User userData;
+  final UserService userService;
 
   @override
   State<AnimatedImageContainer> createState() => _AnimatedImageContainerState();
@@ -44,10 +45,9 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final usersRepository = UserRepository();
 
     return BlocProvider<UserUpdateBloc>(
-        create: (context) => UserUpdateBloc(usersRepository: usersRepository),
+        create: (context) => UserUpdateBloc(userService: widget.userService),
         child: Stack(alignment: Alignment.center, children: [
           AnimatedBuilder(
               animation: _controller,
@@ -96,7 +96,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                         UserUpdateSuccessState() =>
                           widget.userData.imageString.isNotEmpty
                               ? Image.memory(
-                                  base64Decode(widget.userData.imageString))
+                                  base64Decode(widget.userData.imageString), fit: BoxFit.fill)
                               : Text(
                                   widget.userData.firstName.isNotEmpty
                                       ? widget.userData.firstName[0]

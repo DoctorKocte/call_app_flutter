@@ -1,16 +1,19 @@
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/profile/animated_image_container.dart';
+import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/profile/models/setting_model.dart';
-import 'package:call_app/features/profile/settings_list.dart';
+import 'package:call_app/features/profile/presentation/animated_image_container.dart';
+import 'package:call_app/features/profile/presentation/settings_list.dart';
 import 'package:call_app/features/users/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_ui/open_ui.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({required this.userData, super.key});
+  const ProfileScreen({required this.userData, required this.userService, super.key});
 
   final User userData;
+  final UserService userService;
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -42,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         children: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
-              child: AnimatedImageContainer(userData: widget.userData)),
+              child: AnimatedImageContainer(userData: widget.userData, userService: widget.userService)),
           Text('firstname lastname',
               style: TextStyle(
                   fontFamily: FontFamily.graphik,

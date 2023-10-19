@@ -78,8 +78,6 @@ class _InputTextFieldState extends State<InputTextField> {
                          () {
                           setState(() {
                              _controller.clear();
-                             // .text = '';
-                             //widget.onChanged;
                           });
                         },
                         icon: const Icon(Icons.close_rounded),

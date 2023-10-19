@@ -32,6 +32,9 @@ class _FavoriteCardState extends State<FavoriteCard> {
           padding: EdgeInsets.all(16),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Hero(
+          tag: 'imageHero',
+          child:
             Container(
                 height: 90,
                 width: 90,
@@ -39,7 +42,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                     color: colorScheme.background.white,
                     borderRadius: BorderRadius.circular(45),
                     image: DecorationImage(
-                        image: Assets.images.addFriend.provider()))),
+                        image: Assets.images.addFriend.provider())))),
             SizedBox(height: 48),
             Text(widget.contact.firstName ?? widget.contact.username ?? '', style: TextStyle(
                                   fontFamily: FontFamily.graphik,

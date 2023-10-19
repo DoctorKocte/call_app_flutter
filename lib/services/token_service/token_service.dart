@@ -8,7 +8,6 @@ abstract class _TokensKeys {
 }
 
 abstract class TokenServiceProtocol {
-  Stream<TokenDTO?> get tokensStream;
   TokenDTO? get tokens;
   String? get accessToken;
   String? get refreshToken;
@@ -19,15 +18,11 @@ abstract class TokenServiceProtocol {
 }
 
 class TokenService implements TokenServiceProtocol {
-  //TokenService({required this.secureStorage});
 
   final SecureStorage secureStorage = SecureStorage();
 
   final BehaviorSubject<TokenDTO?> _tokensSubject =
       BehaviorSubject<TokenDTO?>();
-
-  @override
-  Stream<TokenDTO?> get tokensStream => _tokensSubject.stream.distinct();
 
   @override
   TokenDTO? get tokens =>

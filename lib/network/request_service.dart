@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:call_app/services/api_response_model.dart';
+import 'package:call_app/network/api_response_model.dart';
 import 'package:call_app/services/token_service/token_service.dart';
 import 'package:dio/dio.dart';
 

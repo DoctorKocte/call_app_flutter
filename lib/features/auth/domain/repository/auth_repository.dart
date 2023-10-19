@@ -1,6 +1,6 @@
 import 'package:call_app/features/auth/models/token_model.dart';
+import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
-import 'package:call_app/services/endpoint_config.dart';
 import 'package:call_app/services/token_service/entity/token_dto.dart';
 import 'package:dartz/dartz.dart';
 

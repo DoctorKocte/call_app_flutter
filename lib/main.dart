@@ -1,6 +1,6 @@
 import 'package:call_app/features/auth/presentation/login/login_screen.dart';
+import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
-import 'package:call_app/services/endpoint_config.dart';
 import 'package:call_app/services/token_service/token_service.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';

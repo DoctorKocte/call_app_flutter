@@ -1,9 +1,11 @@
-abstract class UsersEvent {}
+sealed class UsersEvent {}
 
 class UsersLoadEvent extends UsersEvent {}
 
 class UsersClearEvent extends UsersEvent {}
 
-abstract class UserEvent {}
+sealed class UserEvent {}
 
 class UserLoadEvent extends UserEvent {}
+
+class UserChangeImageEvent extends UserEvent {}

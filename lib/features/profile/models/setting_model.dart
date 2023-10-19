@@ -8,6 +8,8 @@ enum SettingsTypes {
   theme(title: 'Change theme'),
   logout(title: 'Logout');
 
+  const SettingsTypes({required this.title});
+
   AssetGenImage get image {
     switch (this) {
       case SettingsTypes.edit:
@@ -24,8 +26,6 @@ enum SettingsTypes {
         return Assets.images.edit;
     }
   }
-
-  const SettingsTypes({required this.title});
 
   final String title;
 }

@@ -8,4 +8,5 @@ class UserRepository {
 
   Future<Either<String, Users>> getAllUsers() => _userProvider.getUsers();
   Future<Either<String, User>> getUserData() => _userProvider.getUserData();
+  Future<Either<String, void>> changeProfileImage({required String imageString}) => _userProvider.changeProfileImage(imageString: imageString);
 }

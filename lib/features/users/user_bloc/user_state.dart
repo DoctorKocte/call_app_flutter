@@ -16,7 +16,6 @@ class UsersDataState extends UsersState {
 
 class UsersErrorState extends UsersState {}
 
-
 sealed class UserState {
   const UserState();
 }

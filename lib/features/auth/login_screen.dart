@@ -240,13 +240,7 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
     return Column(children: [
       InputTextField(
         textFieldTitle: widget.loginType == LoginType.email ? 'Login' : 'Phone number',
-        //type: TextFieldType.username,
         onChanged: (value) {
-          // valuenotifier
-         
-          // setState(() {
-          //   widget.username = value;
-          // });
           widget.username = value;
           widget.onChanged(widget.username, widget.password);
         },
@@ -311,11 +305,6 @@ class LoginView extends StatelessWidget {
           }
         },
         child: Container()
-        //}
-        // builder: (context, state) {
-        //   isLoginLoading.value = state is AuthLoadingState;
-        //   return const Spacer();
-        // }
         );
   }
 }

@@ -9,8 +9,8 @@ class User {
     required this.lastName, 
     required this.contacts,
     required this.recentContacts,
-    this.phoneNumber,
-    this.imageString
+    required this.imageString, 
+    this.phoneNumber
   });
 
   factory User.fromDTO({required UserDTO dto}) {
@@ -19,7 +19,7 @@ class User {
         firstName: dto.firstName ?? '',
         lastName: dto.lastName ?? '',
         phoneNumber: dto.phoneNumber,
-        imageString: dto.imageString,
+        imageString: dto.imageString ?? '',
         contacts: dto.contacts.map((contactDTO) => Contact.fromDTO(dto: contactDTO)).toList(),
         recentContacts: dto.recentContacts.map((recentContactDTO) => RecentContact.fromDTO(dto: recentContactDTO)).toList()
     );
@@ -29,7 +29,7 @@ class User {
   String firstName;
   String lastName;
   String? phoneNumber;
-  String? imageString;
+  String imageString;
   List<Contact> contacts;
   List<RecentContact> recentContacts;
 }

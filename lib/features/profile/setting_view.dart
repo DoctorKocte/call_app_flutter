@@ -23,29 +23,28 @@ class _SettingViewState extends State<SettingView> {
             color: colorScheme.background.white,
             borderRadius: BorderRadius.circular(0)),
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(children: [
               Container(
                 height: 36,
                 width: 36,
-                //margin: EdgeInsets.symmetric(),
                 decoration: BoxDecoration(
                   color: colorScheme.background.lightGray,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                    padding: EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(6),
                     child: widget.settingsType.image
                         .image(color: colorScheme.background.white)),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(widget.settingsType.title,
                   style: TextStyle(
                       fontFamily: FontFamily.graphik,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: colorScheme.textColor.black)),
-              Spacer()
+              const Spacer()
             ])));
   }
 }

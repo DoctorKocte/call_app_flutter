@@ -14,28 +14,19 @@ class SettingsList extends StatefulWidget {
 class _SettingsListState extends State<SettingsList> {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-  builder: (context, constraints) {
     return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(borderRadius:  BorderRadius.circular(24),),
-      //borderRadius: BorderRadius.circular(24),
-      child: SizedBox(
-        //height: constraints.maxHeight,//based on your need
-        width: constraints.maxWidth,
-        child:
-     ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: widget.settingsTypes.length,
-        itemBuilder: (context, index) {
-          return SettingView(
-            settingsType: widget.settingsTypes[index],
-          );
-        })
-      )
-      );
-      }
-      );
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.settingsTypes.length,
+            itemBuilder: (context, index) {
+              return SettingView(
+                settingsType: widget.settingsTypes[index],
+              );
+            }));
   }
 }

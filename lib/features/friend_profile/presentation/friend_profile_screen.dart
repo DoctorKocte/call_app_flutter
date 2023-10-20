@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:call_app/assets/assets.gen.dart';
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/components/primary_button.dart';
 import 'package:call_app/features/friend_profile/models/button_model.dart';
 import 'package:call_app/features/friend_profile/presentation/blur_buttons_view.dart';
@@ -14,15 +13,11 @@ class FriendProfileScreen extends StatelessWidget {
 
   final FavoriteCardModel favoriteCardModel;
 
-//   @override
-//   State<FriendProfileScreen> createState() => _FriendProfileScreenState();
-// }
-
-// class _FriendProfileScreenState extends State<FriendProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return Scaffold(
       extendBody: true,
@@ -36,8 +31,7 @@ class FriendProfileScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Hero(
                       tag: 'imageHero ${favoriteCardModel.contact.id}',
-                      child: (favoriteCardModel.contact.imageString !=
-                              null)
+                      child: (favoriteCardModel.contact.imageString != null)
                           ? Image.memory(
                               base64Decode(
                                   favoriteCardModel.contact.imageString!),
@@ -75,32 +69,23 @@ class FriendProfileScreen extends StatelessWidget {
                           favoriteCardModel.contact.firstName ??
                               favoriteCardModel.contact.username ??
                               '',
-                          style: TextStyle(
-                              fontFamily: FontFamily.graphik,
-                              fontSize: 36,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.textColor.white)),
+                          style: textStyles
+                              .withColor(colorScheme.textColor.white)
+                              .graphik36semibold),
                       Text(favoriteCardModel.contact.lastName ?? '',
-                          style: TextStyle(
-                              fontFamily: FontFamily.graphik,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w400,
-                              color: colorScheme.textColor.white)),
-                      SizedBox(height: 36),
+                          style: textStyles
+                              .withColor(colorScheme.textColor.white)
+                              .graphik28light),
+                      Flexible(child: 
                       Text(favoriteCardModel.contact.notice ?? '',
-                          style: TextStyle(
-                              fontFamily: FontFamily.graphik,
-                              fontSize: 20,
-                              color: colorScheme.textColor.white)),
+                          style: textStyles
+                              .withColor(colorScheme.textColor.white)
+                              .graphik20normal)),
                       Spacer(),
                       PrimaryButton(
                           buttonText: 'Close',
-                          textStyle: TextStyle(
-                              fontFamily: FontFamily.graphik,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: colorScheme.textColor.white),
-                              radius: 28,
+                          titleColor: colorScheme.textColor.white,
+                          radius: 28,
                           onPressed: () {
                             Navigator.of(context).pop();
                           },

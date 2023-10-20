@@ -1,9 +1,8 @@
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/profile/models/setting_model.dart';
 import 'package:call_app/features/profile/presentation/animated_image_container.dart';
 import 'package:call_app/features/profile/presentation/settings_list.dart';
-import 'package:call_app/features/users/models/user_model.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_ui/open_ui.dart';
@@ -14,26 +13,17 @@ class ProfileScreen extends StatelessWidget {
   final User userData;
   final UserService userService;
 
-//   @override
-//   State<ProfileScreen> createState() => _ProfileScreenState();
-// }
-
-// class _ProfileScreenState extends State<ProfileScreen>
-//     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return Scaffold(
       backgroundColor: colorScheme.background.main,
       appBar: AppBar(
         title: const Text('Profile'),
-        titleTextStyle: TextStyle(
-            fontFamily: FontFamily.graphik,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: colorScheme.textColor.black),
+        titleTextStyle: textStyles.withColor(colorScheme.textColor.black).graphik18semibold,
         foregroundColor: colorScheme.textColor.black,
         centerTitle: true,
         surfaceTintColor: Colors.transparent,
@@ -47,17 +37,9 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: AnimatedImageContainer(userData: userData, userService: userService)),
           Text('firstname lastname',
-              style: TextStyle(
-                  fontFamily: FontFamily.graphik,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: colorScheme.textColor.black)),
+              style: textStyles.withColor(colorScheme.textColor.black).graphik18semibold),
           Text('username',
-              style: TextStyle(
-                  fontFamily: FontFamily.graphik,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: colorScheme.textColor.secondary)),
+              style: textStyles.withColor(colorScheme.textColor.secondary).graphik15normal),
           const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
               child: SettingsList(

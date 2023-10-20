@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:call_app/assets/assets.gen.dart';
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
@@ -11,15 +10,11 @@ class ContactView extends StatelessWidget {
 
   final RecentContact recentContact;
 
-//   @override
-//   State<ContactView> createState() => _ContactViewState();
-// }
-
-// class _ContactViewState extends State<ContactView> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return DecoratedBox(
         decoration: BoxDecoration(
@@ -38,17 +33,16 @@ class ContactView extends StatelessWidget {
                   ),
                   child: (recentContact.contact.imageString != null)
                       ? Image.memory(
-                          base64Decode(
-                              recentContact.contact.imageString!),
+                          base64Decode(recentContact.contact.imageString!),
                           fit: BoxFit.fill)
                       : Assets.images.addFriend.image()),
               SizedBox(width: 20),
-              Text(recentContact.contact.username ?? 'no name',
-                  style: TextStyle(
-                      fontFamily: FontFamily.graphik,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.textColor.darkGray)),
+              Flexible(
+                  child: Text(recentContact.contact.username ?? 'no name',
+                      overflow: TextOverflow.ellipsis,
+                      style: textStyles
+                          .withColor(colorScheme.textColor.darkGray)
+                          .graphik16semibold)),
               Spacer()
             ])));
   }

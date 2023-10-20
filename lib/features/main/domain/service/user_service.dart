@@ -1,5 +1,5 @@
 import 'package:call_app/features/main/domain/repository/user_repository.dart';
-import 'package:call_app/features/users/models/user_model.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:dartz/dartz.dart';
 
 final class UserService {

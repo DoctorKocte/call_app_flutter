@@ -1,4 +1,3 @@
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/components/primary_button.dart';
 import 'package:call_app/components/segment_control.dart';
 import 'package:call_app/components/text_field.dart';
@@ -24,7 +23,8 @@ enum LoginType {
 }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({required this.requestService, required this.endpointConfig, super.key});
+  const LoginScreen(
+      {required this.requestService, required this.endpointConfig, super.key});
 
   final RequestService requestService;
   final EndpointConfig endpointConfig;
@@ -34,7 +34,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  //final authRepository = AuthRepository();
   late AuthService authService;
 
   String username = '';
@@ -43,10 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
   LoginType selectedLoginType = LoginType.email;
   ValueNotifier<bool> isLoginLoading = ValueNotifier(false);
 
-
   @override
   void initState() {
-    authService = AuthService(authRepository: AuthRepository(requestService: widget.requestService, endpointConfig: widget.endpointConfig));
+    authService = AuthService(
+        authRepository: AuthRepository(
+            requestService: widget.requestService,
+            endpointConfig: widget.endpointConfig));
     super.initState();
   }
 
@@ -60,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(authService: authService),
@@ -68,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
               toolbarHeight: 0,
               surfaceTintColor: Colors.transparent,
               backgroundColor: Colors.transparent,
-            systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark),
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                  statusBarColor: Colors.transparent,
+                  statusBarBrightness: Brightness.dark),
             ),
             backgroundColor: colorScheme.background.main,
             body: SingleChildScrollView(
@@ -78,21 +82,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 44),
-                          const Text('Welcome Back',
+                          Text('Welcome Back',
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontFamily: FontFamily.graphik,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold)),
+                              style: textStyles.graphik24bold),
                           const SizedBox(height: 32),
                           Text('To use your account,\nyou should log in first',
-                              style: TextStyle(
-                                  height: 0.9,
-                                  fontFamily: FontFamily.graphik,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color:
-                                      colorScheme.textColor.disableSecondary)),
+                              style: textStyles                                  
+                                  .withColor(
+                                      colorScheme.textColor.disableSecondary)
+                                  .graphik16semibold.copyWith(height: 0.9)),
                           const SizedBox(height: 56),
                           MyStatefulWidget(
                             tabsTitles: const ['Username', 'Phone number'],
@@ -121,7 +119,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           const SizedBox(height: 56),
-                          LoginView(isLoginLoading: isLoginLoading, requestService: widget.requestService, endpointConfig: widget.endpointConfig,),
+                          LoginView(
+                            isLoginLoading: isLoginLoading,
+                            requestService: widget.requestService,
+                            endpointConfig: widget.endpointConfig,
+                          ),
                           ValueListenableBuilder(
                             valueListenable: isLoginLoading,
                             builder: (context, value, child) {
@@ -129,13 +131,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return PrimaryButton(
                                   buttonText: 'Login',
                                   isLoading: isLoginLoading.value,
-                                  color: (username.isEmpty || password.isEmpty) ? colorScheme.background.disableGray : colorScheme.background.blue,
-                                  textStyle: TextStyle(
-                                    fontFamily: FontFamily.graphik,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: (username.isEmpty || password.isEmpty) ? colorScheme.textColor.disableSecondary : colorScheme.textColor.white,
-                                  ),
+                                  color: (username.isEmpty || password.isEmpty)
+                                      ? colorScheme.background.disableGray
+                                      : colorScheme.background.blue,
+                                  titleColor: (username.isEmpty ||
+                                          password.isEmpty)
+                                      ? colorScheme.textColor.disableSecondary
+                                      : colorScheme.textColor.white,
                                   onPressed: () {
                                     if (isLoginLoading.value) {
                                       isLoginLoading.value = false;
@@ -155,47 +157,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 16),
                           Center(
                               child: Text('or',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.graphik,
-                                     fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color:
-                                        colorScheme.textColor.disableSecondary,
-                                  ))),
+                                  style: textStyles
+                                      .withColor(colorScheme
+                                          .textColor.disableSecondary)
+                                      .graphik15normal)),
                           const SizedBox(height: 16),
                           Center(
                               child: Text('Sign in with Google or Facebook',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.graphik,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color:
-                                        colorScheme.textColor.disableSecondary,
-                                  ))),
+                                  style: textStyles
+                                      .withColor(colorScheme
+                                          .textColor.disableSecondary)
+                                      .graphik15normal)),
                           const SizedBox(height: 30),
                           Row(children: [
                             Expanded(
                                 child: PrimaryButton(
                                     buttonText: 'Facebook',
                                     color: colorScheme.background.lightGray,
-                                    textStyle: TextStyle(
-                                      fontFamily: FontFamily.graphik,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15,
-                                      color: colorScheme.textColor.black,
-                                    ),
                                     onPressed: () {})),
                             const SizedBox(width: 16),
                             Expanded(
                                 child: PrimaryButton(
                                     buttonText: 'Google',
                                     color: colorScheme.background.lightGray,
-                                    textStyle: TextStyle(
-                                      fontFamily: FontFamily.graphik,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15,
-                                      color: colorScheme.textColor.black,
-                                    ),
                                     onPressed: () {}))
                           ]),
                           const SizedBox(height: 16),
@@ -203,27 +187,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text('Do not have an account? ',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.graphik,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                      color: colorScheme
-                                          .textColor.disableSecondary,
-                                    )),
+                                    style: textStyles
+                                        .withColor(colorScheme
+                                            .textColor.disableSecondary)
+                                        .graphik15semibold),
                                 GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  RegistrationScreen(requestService: widget.requestService, endpointConfig: widget.endpointConfig,)));
+                                                  RegistrationScreen(
+                                                    requestService:
+                                                        widget.requestService,
+                                                    endpointConfig:
+                                                        widget.endpointConfig,
+                                                  )));
                                     },
                                     child: Text('Sign up',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.graphik,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15,
-                                          color: colorScheme.textColor.blue,
-                                        )))
+                                        style: textStyles
+                                            .withColor(
+                                                colorScheme.textColor.blue)
+                                            .graphik15semibold))
                               ]),
                         ])))));
   }
@@ -234,7 +218,7 @@ class LoginTextFieldsView extends StatefulWidget {
       {required this.loginType,
       required this.username,
       required this.password,
-      required this.onChanged, 
+      required this.onChanged,
       super.key});
 
   final LoginType loginType;
@@ -248,12 +232,12 @@ class LoginTextFieldsView extends StatefulWidget {
 }
 
 class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
-
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       InputTextField(
-        textFieldTitle: widget.loginType == LoginType.email ? 'Login' : 'Phone number',
+        textFieldTitle:
+            widget.loginType == LoginType.email ? 'Login' : 'Phone number',
         onChanged: (value) {
           widget.username = value;
           widget.onChanged(widget.username, widget.password);
@@ -283,7 +267,11 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
 }
 
 class LoginView extends StatelessWidget {
-  const LoginView({required this.isLoginLoading, required this.requestService, required this.endpointConfig, super.key});
+  const LoginView(
+      {required this.isLoginLoading,
+      required this.requestService,
+      required this.endpointConfig,
+      super.key});
 
   final ValueNotifier<bool> isLoginLoading;
   final RequestService requestService;
@@ -295,8 +283,10 @@ class LoginView extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthAuthorizedState) {
             isLoginLoading.value = false;
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => MainScreen(requestService: requestService, endpointConfig: endpointConfig)));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => MainScreen(
+                    requestService: requestService,
+                    endpointConfig: endpointConfig)));
           } else if (state is AuthErrorState) {
             isLoginLoading.value = false;
             showDialog(
@@ -311,16 +301,10 @@ class LoginView extends StatelessWidget {
                                 Navigator.of(context).pop();
                               })
                         ]));
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text(state.errorString),
-            //   ),
-            // );
           } else {
             isLoginLoading.value = true;
           }
         },
-        child: Container()
-        );
+        child: Container());
   }
 }

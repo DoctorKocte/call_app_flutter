@@ -1,6 +1,6 @@
+import 'package:call_app/features/main/dto/user_dto.dart';
 import 'package:call_app/features/main/models/contact.dart';
 import 'package:call_app/features/main/models/recent_contact.dart';
-import 'package:call_app/features/users/dto/user_dto.dart';
 
 class User {
   User({

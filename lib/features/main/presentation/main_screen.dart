@@ -1,4 +1,3 @@
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/features/friend_profile/presentation/friend_profile_screen.dart';
 import 'package:call_app/features/main/domain/repository/user_repository.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
@@ -9,7 +8,7 @@ import 'package:call_app/features/main/presentation/bloc/user_state.dart';
 import 'package:call_app/features/main/presentation/cards_scroll_view.dart';
 import 'package:call_app/features/main/presentation/contacts_list.dart';
 import 'package:call_app/features/profile/presentation/profile_screen.dart';
-import 'package:call_app/features/users/models/user_model.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +45,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     final gradients = [
       colorScheme.gradients.purple,
@@ -77,12 +77,10 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: colorScheme.background.main,
             appBar: AppBar(
                 forceMaterialTransparency: true,
-                title: Text('Welcome'),
-                titleTextStyle: TextStyle(
-                    fontFamily: FontFamily.graphik,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: colorScheme.textColor.black),
+                title: const Text('Welcome'),
+                titleTextStyle: textStyles
+                    .withColor(colorScheme.textColor.black)
+                    .graphik18semibold,
                 centerTitle: true,
                 backgroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -117,11 +115,9 @@ class _MainScreenState extends State<MainScreen> {
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 16),
                               child: Text('Favorites',
-                                  style: TextStyle(
-                                      fontFamily: FontFamily.graphik,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.textColor.black))),
+                                  style: textStyles
+                                      .withColor(colorScheme.textColor.black)
+                                      .graphik24semibold)),
                           SizedBox(
                               height: 366,
                               child: state.userData.contacts.isEmpty
@@ -129,21 +125,34 @@ class _MainScreenState extends State<MainScreen> {
                                       child: Text(
                                           'You don\'t have any favorite contact.\nAdd it on the user details screen',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              height: 0.9,
-                                              fontFamily: FontFamily.graphik,
-                                              fontSize: 20,
-                                              color:
-                                                  colorScheme.textColor.black)))
-                                  :   CardsScrollView(  // проверка на isFavorite
-                                      favoriteCardModels: state.userData.contacts.asMap().map((index, contact) =>  MapEntry(index, FavoriteCardModel(
-                                        backgroundGradient: gradients[index],
-                                        buttonBackground: buttonColors[index],
-                                        backgroundColor: backgroundColors[index],
-                                        contact: contact
-                                      ))).values.toList(),
+                                          style: textStyles
+                                              .withColor(
+                                                  colorScheme.textColor.black)
+                                              .graphik20normal.copyWith(height: 0.9)))
+                                  : CardsScrollView(
+                                      // проверка на isFavorite
+                                      favoriteCardModels: state
+                                          .userData.contacts
+                                          .asMap()
+                                          .map((index, contact) => MapEntry(
+                                              index,
+                                              FavoriteCardModel(
+                                                  backgroundGradient:
+                                                      gradients[index],
+                                                  buttonBackground:
+                                                      buttonColors[index],
+                                                  backgroundColor:
+                                                      backgroundColors[index],
+                                                  contact: contact)))
+                                          .values
+                                          .toList(),
                                       onCardTap: (favoriteCardModel) {
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => FriendProfileScreen(favoriteCardModel: favoriteCardModel)));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    FriendProfileScreen(
+                                                        favoriteCardModel:
+                                                            favoriteCardModel)));
                                       },
                                     )),
                           SizedBox(height: 32),
@@ -154,18 +163,15 @@ class _MainScreenState extends State<MainScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('Recent',
-                                        style: TextStyle(
-                                            fontFamily: FontFamily.graphik,
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w600,
-                                            color:
-                                                colorScheme.textColor.black)),
+                                        style: textStyles
+                                            .withColor(
+                                                colorScheme.textColor.black)
+                                            .graphik24semibold),
                                     Text('All',
-                                        style: TextStyle(
-                                            fontFamily: FontFamily.graphik,
-                                            fontSize: 18,
-                                            color: colorScheme
-                                                .textColor.lightBlue)),
+                                        style: textStyles
+                                            .withColor(
+                                                colorScheme.textColor.lightBlue)
+                                            .graphik18semibold),
                                   ])),
                           Padding(
                               padding: const EdgeInsets.all(20),
@@ -175,22 +181,25 @@ class _MainScreenState extends State<MainScreen> {
                                       child: Text(
                                           'You don\'t have any recent contact now.\nCall anybody',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              height: 0.9,
-                                              fontFamily: FontFamily.graphik,
-                                              fontSize: 20,
-                                              color:
-                                                  colorScheme.textColor.black)))
-                                  : ContactsList(
-                                      recentContacts:
-                                       [RecentContact(date: DateTime.now(), contact: state.userData.contacts.first),
-                                          RecentContact(date: DateTime.now(), contact: state.userData.contacts.last)]
-                                          //state.userData.recentContacts))
-                                         ))
-                                          // для теста можно передать
-                                          // [
-                                          
-                                          // ]
+                                          style: textStyles
+                                              .withColor(
+                                                  colorScheme.textColor.black)
+                                              .graphik20normal.copyWith(height: 0.9)))
+                                  : ContactsList(recentContacts: [
+                                      RecentContact(
+                                          date: DateTime.now(),
+                                          contact:
+                                              state.userData.contacts.first),
+                                      RecentContact(
+                                          date: DateTime.now(),
+                                          contact: state.userData.contacts.last)
+                                    ]
+                                      //state.userData.recentContacts))
+                                      ))
+                          // для теста можно передать
+                          // [
+
+                          // ]
                         ]));
                   })
               };

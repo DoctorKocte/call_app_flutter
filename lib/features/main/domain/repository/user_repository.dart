@@ -1,5 +1,5 @@
-import 'package:call_app/features/users/dto/user_dto.dart';
-import 'package:call_app/features/users/models/user_model.dart';
+import 'package:call_app/features/main/dto/user_dto.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:dartz/dartz.dart';

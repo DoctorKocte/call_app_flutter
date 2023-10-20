@@ -7,11 +7,6 @@ class SettingsList extends StatelessWidget {
 
   final List<SettingsTypes> settingsTypes;
 
-//   @override
-//   State<SettingsList> createState() => _SettingsListState();
-// }
-
-// class _SettingsListState extends State<SettingsList> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -7,11 +7,6 @@ class ContactsList extends StatelessWidget {
 
   final List<RecentContact> recentContacts;
 
-//   @override
-//   State<ContactsList> createState() => _ContactsListState();
-// }
-
-// class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

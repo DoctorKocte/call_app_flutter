@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_bloc.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_event.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_state.dart';
-import 'package:call_app/features/users/models/user_model.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_ui/open_ui.dart';
 
 class AnimatedImageContainer extends StatefulWidget {
-  const AnimatedImageContainer({required this.userData, required this.userService, super.key});
+  const AnimatedImageContainer(
+      {required this.userData, required this.userService, super.key});
 
   final User userData;
   final UserService userService;
@@ -45,6 +45,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return BlocProvider<UserUpdateBloc>(
         create: (context) => UserUpdateBloc(userService: widget.userService),
@@ -67,9 +68,12 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
               onTap: pickImage,
               child: Builder(builder: (context) {
                 if (img64.isNotEmpty) {
-                  final UserUpdateBloc userUpdateBloc =
-                      BlocProvider.of(context);
-                  userUpdateBloc.add(UserChangeImageEvent(imageString: img64));
+                  context
+                      .read<UserUpdateBloc>()
+                      .add(UserChangeImageEvent(imageString: img64));
+                  // final UserUpdateBloc userUpdateBloc =
+                  //     BlocProvider.of(context);
+                  // userUpdateBloc.add(UserChangeImageEvent(imageString: img64));
                 }
                 return Container(
                     clipBehavior: Clip.hardEdge,
@@ -88,24 +92,21 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                             widget.userData.firstName.isNotEmpty
                                 ? widget.userData.firstName[0]
                                 : '#',
-                            style: TextStyle(
-                                fontFamily: FontFamily.graphik,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.textColor.black)),
+                            style: textStyles
+                                .withColor(colorScheme.textColor.black)
+                                .graphik24bold),
                         UserUpdateSuccessState() =>
                           widget.userData.imageString.isNotEmpty
                               ? Image.memory(
-                                  base64Decode(widget.userData.imageString), fit: BoxFit.fill)
+                                  base64Decode(widget.userData.imageString),
+                                  fit: BoxFit.fill)
                               : Text(
                                   widget.userData.firstName.isNotEmpty
                                       ? widget.userData.firstName[0]
                                       : '',
-                                  style: TextStyle(
-                                      fontFamily: FontFamily.graphik,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: colorScheme.textColor.black))
+                                  style: textStyles
+                                      .withColor(colorScheme.textColor.black)
+                                      .graphik24bold)
                       };
                     }));
               }))

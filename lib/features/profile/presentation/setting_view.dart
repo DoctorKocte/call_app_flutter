@@ -1,4 +1,3 @@
-import 'package:call_app/assets/fonts.gen.dart';
 import 'package:call_app/features/profile/models/setting_model.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
@@ -8,15 +7,11 @@ class SettingView extends StatelessWidget {
 
   final SettingsTypes settingsType;
 
-//   @override
-//   State<SettingView> createState() => _SettingViewState();
-// }
-
-// class _SettingViewState extends State<SettingView> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
 
     return DecoratedBox(
         decoration: BoxDecoration(
@@ -39,11 +34,9 @@ class SettingView extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(settingsType.title,
-                  style: TextStyle(
-                      fontFamily: FontFamily.graphik,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: colorScheme.textColor.black)),
+                  style: textStyles
+                      .withColor(colorScheme.textColor.black)
+                      .graphik15semibold),
               const Spacer()
             ])));
   }

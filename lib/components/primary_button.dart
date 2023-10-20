@@ -6,23 +6,24 @@ class PrimaryButton extends StatelessWidget {
       required this.buttonText, 
       required this.onPressed, 
       required this.color,
+      this.titleColor = Colors.black,
       this.radius = 8,
-      this.textStyle,
       super.key,
       this.isLoading = false
     });
 
   final String buttonText;
+  final Color titleColor;
   final bool isLoading;
   final Color color;
   final double radius;
-  final TextStyle? textStyle;
   final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final textStyles = appTheme.textStyles;
     
     return 
      GestureDetector(
@@ -39,7 +40,7 @@ class PrimaryButton extends StatelessWidget {
             ? Center(child: CircularProgressIndicator(color: colorScheme.background.white))
             : Center(child: Text(
               buttonText, 
-              style: textStyle
+              style: textStyles.withColor(titleColor).graphik15normal
             )),
           ),
        

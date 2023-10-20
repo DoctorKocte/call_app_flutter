@@ -8,12 +8,6 @@ class CardsScrollView extends StatelessWidget {
   final List<FavoriteCardModel> favoriteCardModels;
   final Function(FavoriteCardModel) onCardTap;
 
-//   @override
-//   State<CardsScrollView> createState() => _CardsScrollViewState();
-// }
-
-// class _CardsScrollViewState extends State<CardsScrollView> {
-
   @override
   Widget build(BuildContext context) {
     return RotatedBox(
@@ -22,7 +16,6 @@ class CardsScrollView extends StatelessWidget {
           itemExtent: MediaQuery.of(context).size.width / 1.5,
           diameterRatio: 3,
           offAxisFraction: 1,
-          // 0 - 0.1
           perspective: 0.002,
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate(
@@ -33,14 +26,11 @@ class CardsScrollView extends StatelessWidget {
                       quarterTurns: 1,
                       child: FavoriteCard(
                         favoriteCardModel: favoriteCardModels[index],                       
-                        onCardTap: (favoriteCardModel) {
-                          onCardTap(favoriteCardModel);
-                        },
+                        onCardTap: onCardTap,
                       )
                )
             ),
           ),
-          //squeeze: 1.1,
           onSelectedItemChanged: (index) {},
         )
       );

@@ -2,22 +2,23 @@ import 'dart:convert';
 
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/assets/fonts.gen.dart';
-import 'package:call_app/features/main/models/contact.dart';
+import 'package:call_app/components/primary_button.dart';
+import 'package:call_app/features/friend_profile/models/button_model.dart';
+import 'package:call_app/features/friend_profile/presentation/blur_buttons_view.dart';
+import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:open_ui/open_ui.dart';
 
+class FriendProfileScreen extends StatelessWidget {
+  const FriendProfileScreen({required this.favoriteCardModel, super.key});
 
-class FriendProfileScreen extends StatefulWidget {
-  const FriendProfileScreen({required this.contact, super.key});
+  final FavoriteCardModel favoriteCardModel;
 
-  final Contact contact;
+//   @override
+//   State<FriendProfileScreen> createState() => _FriendProfileScreenState();
+// }
 
-  @override
-  State<FriendProfileScreen> createState() => _FriendProfileScreenState();
-}
-
-class _FriendProfileScreenState extends State<FriendProfileScreen> {
+// class _FriendProfileScreenState extends State<FriendProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
@@ -25,69 +26,89 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
 
     return Scaffold(
       extendBody: true,
-      appBar: AppBar(
-        foregroundColor: colorScheme.textColor.black,
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: Center(
-        child: Hero(
-          tag: 'imageHero',
-          child: (widget.contact.imageString != null) 
-            ? Image.memory(base64Decode(widget.contact.imageString!), fit: BoxFit.fill)
-            : Assets.images.addFriend.image()
-        ),
-      ),
-    );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Screen'),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const DetailScreen();
-          }));
-        },
-        child: Hero(
-          tag: 'imageHero',
-          child: Image.network(
-            'https://picsum.photos/250?image=9',
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Center(
-          child: Hero(
-            tag: 'imageHero',
-            child: Image.network(
-              'https://picsum.photos/250?image=9',
-            ),
-          ),
-        ),
-      ),
+      body: Stack(children: [
+        SizedBox(
+            height: MediaQuery.of(context).size.height * 0.64,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: [
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.64,
+                  width: MediaQuery.of(context).size.width,
+                  child: Hero(
+                      tag: 'imageHero ${favoriteCardModel.contact.id}',
+                      child: (favoriteCardModel.contact.imageString !=
+                              null)
+                          ? Image.memory(
+                              base64Decode(
+                                  favoriteCardModel.contact.imageString!),
+                              fit: BoxFit.cover)
+                          : Assets.images.addFriend.image(fit: BoxFit.cover))),
+              Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 100, 60),
+                    child: BlurButtonsView(
+                      buttonModels: [
+                        ButtonModel.call,
+                        ButtonModel.video,
+                        ButtonModel.favorite
+                      ],
+                      buttonsColor: favoriteCardModel.buttonBackground,
+                    )),
+              )
+            ])),
+        Align(
+            alignment: AlignmentDirectional.bottomCenter,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(18),
+                      topRight: Radius.circular(18)),
+                  color: favoriteCardModel.backgroundColor),
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(16, 30, 16, 44),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          favoriteCardModel.contact.firstName ??
+                              favoriteCardModel.contact.username ??
+                              '',
+                          style: TextStyle(
+                              fontFamily: FontFamily.graphik,
+                              fontSize: 36,
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.textColor.white)),
+                      Text(favoriteCardModel.contact.lastName ?? '',
+                          style: TextStyle(
+                              fontFamily: FontFamily.graphik,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w400,
+                              color: colorScheme.textColor.white)),
+                      SizedBox(height: 36),
+                      Text(favoriteCardModel.contact.notice ?? '',
+                          style: TextStyle(
+                              fontFamily: FontFamily.graphik,
+                              fontSize: 20,
+                              color: colorScheme.textColor.white)),
+                      Spacer(),
+                      PrimaryButton(
+                          buttonText: 'Close',
+                          textStyle: TextStyle(
+                              fontFamily: FontFamily.graphik,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: colorScheme.textColor.white),
+                              radius: 28,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          color: favoriteCardModel.buttonBackground)
+                    ],
+                  )),
+            ))
+      ]),
     );
   }
 }

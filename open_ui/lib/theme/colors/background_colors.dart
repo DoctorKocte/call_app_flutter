@@ -13,6 +13,16 @@ class BackgroundColors {
     required this.success,
     required this.danger,
     required this.error,
+    required this.purpleBackground,
+    required this.blueBackground,
+    required this.redBackground,
+    required this.lightBlueBackground,
+    required this.greenBackground,
+    required this.purpleButton,
+    required this.blueButton,
+    required this.redButton,
+    required this.lightBlueButton,
+    required this.greenButton,
     required this.white16,
     required this.white20,
     required this.white25,
@@ -33,6 +43,16 @@ class BackgroundColors {
         success: _success,
         danger: _danger,
         error: _error,
+        purpleBackground: _purpleBackground,
+        blueBackground: _blueBackground,
+        redBackground: _redBackground,
+        lightBlueBackground: _lightBlueBackground,
+        greenBackground: _greenBackground,
+        purpleButton: _purpleButton,
+        blueButton: _blueButton,
+        redButton: _redButton,
+        lightBlueButton: _lightBlueButton,
+        greenButton: _greenButton,
         white16: _white16,
         white20: _white20,
         white25: _white25,
@@ -59,6 +79,18 @@ class BackgroundColors {
   final Color white30;
   final Color white60;
 
+  final Color purpleBackground;
+  final Color blueBackground;
+  final Color redBackground;
+  final Color lightBlueBackground;
+  final Color greenBackground;
+
+  final Color purpleButton;
+  final Color blueButton;
+  final Color redButton;
+  final Color lightBlueButton;
+  final Color greenButton;
+
   static const Color _main = Color.fromRGBO(235, 241, 245, 1);
   static const Color _white =Colors.white;
   static const Color _black = Colors.black;
@@ -67,7 +99,19 @@ class BackgroundColors {
   static const Color _disableGray = Color.fromRGBO(208, 220, 228, 1);
   static const Color _blue = Color.fromRGBO(44, 102, 189, 1);
   static const Color _darkBlue = Color.fromRGBO(26, 66, 124, 1);
-  //static const Color _shadow = Color.fromRGBO(0, 31, 61, 4);
+
+  static const Color _purpleBackground = Color.fromRGBO(97, 49, 175, 1);
+  static const Color _blueBackground = Color.fromRGBO(51, 94, 163, 1);
+  static const Color _redBackground = Color.fromRGBO(167, 70, 75, 1);
+  static const Color _lightBlueBackground = Color.fromRGBO(46, 113, 176, 1);
+  static const Color _greenBackground = Color.fromRGBO(52, 155, 136, 1);
+
+  static const Color _purpleButton = Color.fromRGBO(68, 35, 121, 1);
+  static const Color _blueButton = Color.fromRGBO(35, 76, 141, 1);
+  static const Color _redButton = Color.fromRGBO(150, 49, 55, 1);
+  static const Color _lightBlueButton = Color.fromRGBO(36, 83, 126, 1);
+  static const Color _greenButton = Color.fromRGBO(27, 121, 104, 1);
+
   static const Color _success = Color.fromRGBO(120, 181, 119, 1);
   static const Color _danger = Color.fromRGBO(191, 88, 88, 1);
   static const Color _error = Color.fromRGBO(224, 37, 68, 1);

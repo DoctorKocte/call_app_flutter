@@ -1,6 +1,9 @@
 import 'package:call_app/assets/fonts.gen.dart';
+import 'package:call_app/features/friend_profile/presentation/friend_profile_screen.dart';
 import 'package:call_app/features/main/domain/repository/user_repository.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
+import 'package:call_app/features/main/models/favorite_card_model.dart';
+import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
 import 'package:call_app/features/main/presentation/bloc/user_state.dart';
 import 'package:call_app/features/main/presentation/cards_scroll_view.dart';
@@ -44,6 +47,30 @@ class _MainScreenState extends State<MainScreen> {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
 
+    final gradients = [
+      colorScheme.gradients.purple,
+      colorScheme.gradients.blue,
+      colorScheme.gradients.red,
+      colorScheme.gradients.pink,
+      colorScheme.gradients.green
+    ];
+
+    final backgroundColors = [
+      colorScheme.background.purpleBackground,
+      colorScheme.background.blueBackground,
+      colorScheme.background.redBackground,
+      colorScheme.background.lightBlueBackground,
+      colorScheme.background.greenBackground
+    ];
+
+    final buttonColors = [
+      colorScheme.background.purpleButton,
+      colorScheme.background.blueButton,
+      colorScheme.background.redButton,
+      colorScheme.background.lightBlueButton,
+      colorScheme.background.greenButton
+    ];
+
     return BlocProvider<UserBloc>(
         create: (context) => UserBloc(userService: userService),
         child: Scaffold(
@@ -56,9 +83,7 @@ class _MainScreenState extends State<MainScreen> {
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: colorScheme.textColor.black),
-                //foregroundColor: colorScheme.textColor.black,
                 centerTitle: true,
-                //surfaceTintColor: colorScheme.textColor.black,
                 backgroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
                 leading: Padding(
@@ -110,8 +135,16 @@ class _MainScreenState extends State<MainScreen> {
                                               fontSize: 20,
                                               color:
                                                   colorScheme.textColor.black)))
-                                  : CardsScrollView(
-                                      contacts: state.userData.contacts,
+                                  :   CardsScrollView(  // проверка на isFavorite
+                                      favoriteCardModels: state.userData.contacts.asMap().map((index, contact) =>  MapEntry(index, FavoriteCardModel(
+                                        backgroundGradient: gradients[index],
+                                        buttonBackground: buttonColors[index],
+                                        backgroundColor: backgroundColors[index],
+                                        contact: contact
+                                      ))).values.toList(),
+                                      onCardTap: (favoriteCardModel) {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => FriendProfileScreen(favoriteCardModel: favoriteCardModel)));
+                                      },
                                     )),
                           SizedBox(height: 32),
                           Padding(
@@ -131,13 +164,13 @@ class _MainScreenState extends State<MainScreen> {
                                         style: TextStyle(
                                             fontFamily: FontFamily.graphik,
                                             fontSize: 18,
-                                            //fontWeight: FontWeight.w500,
                                             color: colorScheme
                                                 .textColor.lightBlue)),
                                   ])),
                           Padding(
                               padding: const EdgeInsets.all(20),
-                              child: state.userData.recentContacts.isEmpty
+                              // поменять на isNotEmpty для теста с recent contacts
+                              child: state.userData.recentContacts.isNotEmpty
                                   ? Center(
                                       child: Text(
                                           'You don\'t have any recent contact now.\nCall anybody',
@@ -150,7 +183,14 @@ class _MainScreenState extends State<MainScreen> {
                                                   colorScheme.textColor.black)))
                                   : ContactsList(
                                       recentContacts:
-                                          state.userData.recentContacts))
+                                       [RecentContact(date: DateTime.now(), contact: state.userData.contacts.first),
+                                          RecentContact(date: DateTime.now(), contact: state.userData.contacts.last)]
+                                          //state.userData.recentContacts))
+                                         ))
+                                          // для теста можно передать
+                                          // [
+                                          
+                                          // ]
                         ]));
                   })
               };

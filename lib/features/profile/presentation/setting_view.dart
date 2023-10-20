@@ -3,16 +3,16 @@ import 'package:call_app/features/profile/models/setting_model.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
-class SettingView extends StatefulWidget {
+class SettingView extends StatelessWidget {
   const SettingView({required this.settingsType, super.key});
 
   final SettingsTypes settingsType;
 
-  @override
-  State<SettingView> createState() => _SettingViewState();
-}
+//   @override
+//   State<SettingView> createState() => _SettingViewState();
+// }
 
-class _SettingViewState extends State<SettingView> {
+// class _SettingViewState extends State<SettingView> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
@@ -34,11 +34,11 @@ class _SettingViewState extends State<SettingView> {
                 ),
                 child: Padding(
                     padding: const EdgeInsets.all(6),
-                    child: widget.settingsType.image
+                    child: settingsType.image
                         .image(color: colorScheme.background.white)),
               ),
               const SizedBox(width: 8),
-              Text(widget.settingsType.title,
+              Text(settingsType.title,
                   style: TextStyle(
                       fontFamily: FontFamily.graphik,
                       fontSize: 14,

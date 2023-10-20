@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_ui/open_ui.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({required this.userData, required this.userService, super.key});
 
   final User userData;
   final UserService userService;
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
+//   @override
+//   State<ProfileScreen> createState() => _ProfileScreenState();
+// }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
+// class _ProfileScreenState extends State<ProfileScreen>
+//     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         children: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
-              child: AnimatedImageContainer(userData: widget.userData, userService: widget.userService)),
+              child: AnimatedImageContainer(userData: userData, userService: userService)),
           Text('firstname lastname',
               style: TextStyle(
                   fontFamily: FontFamily.graphik,

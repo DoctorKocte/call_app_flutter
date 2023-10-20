@@ -6,6 +6,7 @@ class PrimaryButton extends StatelessWidget {
       required this.buttonText, 
       required this.onPressed, 
       required this.color,
+      this.radius = 8,
       this.textStyle,
       super.key,
       this.isLoading = false
@@ -14,6 +15,7 @@ class PrimaryButton extends StatelessWidget {
   final String buttonText;
   final bool isLoading;
   final Color color;
+  final double radius;
   final TextStyle? textStyle;
   final void Function()? onPressed;
 
@@ -31,7 +33,7 @@ class PrimaryButton extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: isLoading ? colorScheme.background.darkBlue : color,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(radius),
           ),
           child: isLoading 
             ? Center(child: CircularProgressIndicator(color: colorScheme.background.white))

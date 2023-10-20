@@ -1,31 +1,21 @@
-import 'package:call_app/features/main/models/contact.dart';
+import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:call_app/features/main/presentation/favorite_card.dart';
 import 'package:flutter/material.dart';
-import 'package:open_ui/open_ui.dart';
 
-class CardsScrollView extends StatefulWidget {
-  const CardsScrollView({required this.contacts, super.key});
+class CardsScrollView extends StatelessWidget {
+  const CardsScrollView({required this.favoriteCardModels, required this.onCardTap, super.key});
 
-  final List<Contact> contacts;
+  final List<FavoriteCardModel> favoriteCardModels;
+  final Function(FavoriteCardModel) onCardTap;
 
-  @override
-  State<CardsScrollView> createState() => _CardsScrollViewState();
-}
+//   @override
+//   State<CardsScrollView> createState() => _CardsScrollViewState();
+// }
 
-class _CardsScrollViewState extends State<CardsScrollView> {
+// class _CardsScrollViewState extends State<CardsScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = AppTheme.of(context);
-    final colorScheme = appTheme.colorScheme;
-    final gradients = [
-      colorScheme.gradients.purple,
-      colorScheme.gradients.blue,
-      colorScheme.gradients.red,
-      colorScheme.gradients.pink,
-      colorScheme.gradients.green
-    ];
-    
     return RotatedBox(
         quarterTurns: 3,
         child: ListWheelScrollView.useDelegate(
@@ -36,10 +26,19 @@ class _CardsScrollViewState extends State<CardsScrollView> {
           perspective: 0.002,
           physics: const FixedExtentScrollPhysics(),
           childDelegate: ListWheelChildBuilderDelegate(
-            childCount: widget.contacts.length,
-            builder: (context, index) => Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child:  RotatedBox(
+            childCount: favoriteCardModels.length,
+            builder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20), 
+              child:  RotatedBox(
                       quarterTurns: 1,
-                      child: FavoriteCard(backgroundGradient: gradients[index], contact: widget.contacts[index],))),
+                      child: FavoriteCard(
+                        favoriteCardModel: favoriteCardModels[index],                       
+                        onCardTap: (favoriteCardModel) {
+                          onCardTap(favoriteCardModel);
+                        },
+                      )
+               )
+            ),
           ),
           //squeeze: 1.1,
           onSelectedItemChanged: (index) {},

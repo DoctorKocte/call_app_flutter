@@ -2,16 +2,16 @@ import 'package:call_app/features/profile/models/setting_model.dart';
 import 'package:call_app/features/profile/presentation/setting_view.dart';
 import 'package:flutter/material.dart';
 
-class SettingsList extends StatefulWidget {
+class SettingsList extends StatelessWidget {
   const SettingsList({required this.settingsTypes, super.key});
 
   final List<SettingsTypes> settingsTypes;
 
-  @override
-  State<SettingsList> createState() => _SettingsListState();
-}
+//   @override
+//   State<SettingsList> createState() => _SettingsListState();
+// }
 
-class _SettingsListState extends State<SettingsList> {
+// class _SettingsListState extends State<SettingsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,10 +22,10 @@ class _SettingsListState extends State<SettingsList> {
         child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: widget.settingsTypes.length,
+            itemCount: settingsTypes.length,
             itemBuilder: (context, index) {
               return SettingView(
-                settingsType: widget.settingsTypes[index],
+                settingsType: settingsTypes[index],
               );
             }));
   }

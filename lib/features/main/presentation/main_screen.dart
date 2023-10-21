@@ -3,12 +3,12 @@ import 'package:call_app/features/main/domain/repository/user_repository.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:call_app/features/main/models/recent_contact.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
 import 'package:call_app/features/main/presentation/bloc/user_state.dart';
 import 'package:call_app/features/main/presentation/cards_scroll_view.dart';
 import 'package:call_app/features/main/presentation/contacts_list.dart';
 import 'package:call_app/features/profile/presentation/profile_screen.dart';
-import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final spacer = appTheme.spacer;
 
     final gradients = [
       colorScheme.gradients.purple,
@@ -85,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                 backgroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
                 leading: Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(spacer.sp16),
                     child: GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -96,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: Image.asset('assets/images/menu.png'))),
                 actions: <Widget>[
                   Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.all(spacer.sp16),
                       child: Image.asset('assets/images/teamwork.png'))
                 ]),
             body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
@@ -113,7 +114,8 @@ class _MainScreenState extends State<MainScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                           Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: spacer.sp16),
                               child: Text('Favorites',
                                   style: textStyles
                                       .withColor(colorScheme.textColor.black)
@@ -128,7 +130,8 @@ class _MainScreenState extends State<MainScreen> {
                                           style: textStyles
                                               .withColor(
                                                   colorScheme.textColor.black)
-                                              .graphik20normal.copyWith(height: 0.9)))
+                                              .graphik20normal
+                                              .copyWith(height: 0.9)))
                                   : CardsScrollView(
                                       // проверка на isFavorite
                                       favoriteCardModels: state
@@ -157,7 +160,8 @@ class _MainScreenState extends State<MainScreen> {
                                     )),
                           SizedBox(height: 32),
                           Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: spacer.sp16),
                               child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -174,7 +178,7 @@ class _MainScreenState extends State<MainScreen> {
                                             .graphik18semibold),
                                   ])),
                           Padding(
-                              padding: const EdgeInsets.all(20),
+                              padding: EdgeInsets.all(spacer.sp20),
                               // поменять на isNotEmpty для теста с recent contacts
                               child: state.userData.recentContacts.isNotEmpty
                                   ? Center(
@@ -184,7 +188,8 @@ class _MainScreenState extends State<MainScreen> {
                                           style: textStyles
                                               .withColor(
                                                   colorScheme.textColor.black)
-                                              .graphik20normal.copyWith(height: 0.9)))
+                                              .graphik20normal
+                                              .copyWith(height: 0.9)))
                                   : ContactsList(recentContacts: [
                                       RecentContact(
                                           date: DateTime.now(),

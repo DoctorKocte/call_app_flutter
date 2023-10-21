@@ -17,6 +17,8 @@ class FavoriteCard extends StatelessWidget {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final spacer = appTheme.spacer;
+    final radius = appTheme.radius;
 
     return GestureDetector(
         onTap: () {
@@ -29,14 +31,14 @@ class FavoriteCard extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: favoriteCardModel.backgroundGradient),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: radius.radius16,
                   boxShadow: [
                 BoxShadow(
                     color: colorScheme.background.black.withOpacity(0.3),
                     blurRadius: 8)
               ])),
           Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(spacer.sp16),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,7 +50,7 @@ class FavoriteCard extends StatelessWidget {
                             width: 90,
                             decoration: BoxDecoration(
                               color: colorScheme.background.white,
-                              borderRadius: BorderRadius.circular(45),
+                              borderRadius: radius.radius45,
                             ),
                             child: (favoriteCardModel.contact.imageString !=
                                     null)
@@ -81,9 +83,9 @@ class FavoriteCard extends StatelessWidget {
                             width: 42,
                             decoration: BoxDecoration(
                                 color: colorScheme.background.white20,
-                                borderRadius: BorderRadius.circular(21)),
+                                borderRadius: radius.radius21),
                             child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: EdgeInsets.all(spacer.sp8),
                                 child: Assets.images.call.image())))
                   ]))
         ]));

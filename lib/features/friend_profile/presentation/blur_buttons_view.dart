@@ -18,19 +18,20 @@ class BlurButtonsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final radius = appTheme.radius;
+    final spacer = appTheme.spacer;
 
     return Container(
         height: 60,
         clipBehavior: Clip.hardEdge,
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(30))),
+        decoration: BoxDecoration(borderRadius: radius.radius30),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: Container(
+          child: DecoratedBox(
             decoration: BoxDecoration(
                 color: colorScheme.background.white.withOpacity(0.5)),
             child: Padding(
-                padding: EdgeInsets.all(6),
+                padding: EdgeInsets.all(spacer.sp6),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: buttonModels

@@ -1,6 +1,7 @@
 import 'package:call_app/features/profile/models/setting_model.dart';
 import 'package:call_app/features/profile/presentation/setting_view.dart';
 import 'package:flutter/material.dart';
+import 'package:open_ui/open_ui.dart';
 
 class SettingsList extends StatelessWidget {
   const SettingsList({required this.settingsTypes, super.key});
@@ -9,10 +10,12 @@ class SettingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final radius = AppTheme.of(context).radius;
+
     return Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: radius.radius24,
         ),
         child: ListView.builder(
             shrinkWrap: true,

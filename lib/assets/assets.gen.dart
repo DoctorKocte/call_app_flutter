@@ -36,14 +36,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/lock.png
   AssetGenImage get lock => const AssetGenImage('assets/images/lock.png');
 
+  /// File path: assets/images/logout.png
+  AssetGenImage get logout => const AssetGenImage('assets/images/logout.png');
+
   /// File path: assets/images/menu.png
   AssetGenImage get menu => const AssetGenImage('assets/images/menu.png');
 
+  /// File path: assets/images/mute.png
+  AssetGenImage get mute => const AssetGenImage('assets/images/mute.png');
+
   /// File path: assets/images/noFavorites.png
   AssetGenImage get noFavorites => const AssetGenImage('assets/images/noFavorites.png');
-
-  /// File path: assets/images/noRecents.png
-  AssetGenImage get noRecents => const AssetGenImage('assets/images/noRecents.png');
 
   /// File path: assets/images/profile.png
   AssetGenImage get profile => const AssetGenImage('assets/images/profile.png');
@@ -60,6 +63,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/teamwork.png
   AssetGenImage get teamwork => const AssetGenImage('assets/images/teamwork.png');
 
+  /// File path: assets/images/theme.png
+  AssetGenImage get theme => const AssetGenImage('assets/images/theme.png');
+
   /// File path: assets/images/video.png
   AssetGenImage get video => const AssetGenImage('assets/images/video.png');
 
@@ -73,14 +79,16 @@ class $AssetsImagesGen {
         end,
         fillStar,
         lock,
+        logout,
         menu,
+        mute,
         noFavorites,
-        noRecents,
         profile,
         scan,
         star,
         team,
         teamwork,
+        theme,
         video
       ];
 }

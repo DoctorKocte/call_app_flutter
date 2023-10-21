@@ -15,13 +15,14 @@ class ContactView extends StatelessWidget {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final spacer = appTheme.spacer;
+    final radius = appTheme.radius;
 
     return DecoratedBox(
         decoration: BoxDecoration(
-            color: colorScheme.background.white,
-            borderRadius: BorderRadius.circular(16)),
+            color: colorScheme.background.white, borderRadius: radius.radius16),
         child: Padding(
-            padding: EdgeInsets.all(22),
+            padding: EdgeInsets.all(spacer.sp20),
             child: Row(children: [
               Container(
                   clipBehavior: Clip.hardEdge,
@@ -39,7 +40,7 @@ class ContactView extends StatelessWidget {
               SizedBox(width: 20),
               Flexible(
                   child: Text(recentContact.contact.username ?? 'no name',
-                      overflow: TextOverflow.ellipsis,
+                      //overflow: TextOverflow.fade,
                       style: textStyles
                           .withColor(colorScheme.textColor.darkGray)
                           .graphik16semibold)),

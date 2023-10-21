@@ -37,12 +37,13 @@ class _InputTextFieldState extends State<InputTextField> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
+    final radius = appTheme.radius;
 
     return Center(
       child: Stack(alignment: Alignment.center, children: [
         Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: radius.radius12,
               color: colorScheme.background.white,
             ),
             height: 64),
@@ -53,13 +54,13 @@ class _InputTextFieldState extends State<InputTextField> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: colorScheme.background.white,
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  border: OutlineInputBorder(
+                    borderRadius: radius.radius12,
                     borderSide: BorderSide.none,
                   ),
-                  focusedBorder: const OutlineInputBorder(
+                  focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    borderRadius: radius.radius12,
                   ),
                   labelText: widget.textFieldTitle,
                   floatingLabelStyle:

@@ -20,6 +20,6 @@ class AppTheme extends InheritedWidget {
   static AppThemeData of(BuildContext context) {
     final widget = context.dependOnInheritedWidgetOfExactType<AppTheme>();
 
-    return widget?.theme ?? AppThemeData.dark();
+    return widget?.theme ?? AppThemeData.light();
   }
 }

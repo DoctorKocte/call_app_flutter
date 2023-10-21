@@ -28,6 +28,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final spacer = appTheme.spacer;
+    final radius = appTheme.radius;
 
     return Container(
       height: 56,
@@ -35,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
       width: double.infinity,
       decoration: BoxDecoration(
         color: colorScheme.background.lightGray,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: radius.radius12,
       ),
       child: TabBar(
           onTap: (tabIndex) {
@@ -45,9 +47,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
           },
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.tab,
-          indicatorPadding: const EdgeInsets.all(6),
+          indicatorPadding: EdgeInsets.all(spacer.sp6),
           indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: radius.radius12,
               color: colorScheme.background.white),
           labelColor: colorScheme.textColor.black,
           overlayColor: const MaterialStatePropertyAll(Colors.transparent),

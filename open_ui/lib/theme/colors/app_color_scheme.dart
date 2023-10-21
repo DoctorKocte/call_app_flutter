@@ -22,7 +22,7 @@ class AppColorScheme {
     background: BackgroundColors.light(),
     textColor: TextColors.light(),
     gradients: GradientColors.light(),
-    icons: IconColors.dark()
+    icons: IconColors.light()
   );
 
   final BackgroundColors background;

@@ -6,29 +6,26 @@ import 'package:open_ui/theme/grid/grid_spacer.dart';
 import 'package:open_ui/theme/material_theme.dart';
 
 class AppThemeData {
-  const AppThemeData({
-    required this.colorScheme,
-    required this.materialTheme,
-    required this.spacer,
-    required this.radius,
-    required this.textStyles
-  });
+  const AppThemeData(
+      {required this.colorScheme,
+      required this.materialTheme,
+      required this.spacer,
+      required this.radius,
+      required this.textStyles});
 
   factory AppThemeData.light() => AppThemeData(
-        colorScheme: AppColorScheme.light(),
-        materialTheme: MaterialTheme.lightTheme,
-        spacer: GridSpacer.regular(),
-        radius: AppBorderRadius.regular(),
-        textStyles: AppTextColors.regular()
-      );
+      colorScheme: AppColorScheme.light(),
+      materialTheme: MaterialTheme.lightTheme,
+      spacer: GridSpacer.regular(),
+      radius: AppBorderRadius.regular(),
+      textStyles: AppTextColors.regular());
 
   factory AppThemeData.dark() => AppThemeData(
-        colorScheme: AppColorScheme.dark(),
-        materialTheme: MaterialTheme.darkTheme,
-        spacer: GridSpacer.regular(),
-        radius: AppBorderRadius.regular(),
-        textStyles: AppTextColors.regular()
-      );
+      colorScheme: AppColorScheme.dark(),
+      materialTheme: MaterialTheme.darkTheme,
+      spacer: GridSpacer.regular(),
+      radius: AppBorderRadius.regular(),
+      textStyles: AppTextColors.regular());
 
   final ThemeData materialTheme;
   final AppColorScheme colorScheme;

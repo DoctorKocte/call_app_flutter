@@ -1,15 +1,19 @@
 import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:call_app/features/main/presentation/favorite_card.dart';
 import 'package:flutter/material.dart';
+import 'package:open_ui/open_ui.dart';
 
 class CardsScrollView extends StatelessWidget {
-  const CardsScrollView({required this.favoriteCardModels, required this.onCardTap, super.key});
+  const CardsScrollView(
+      {required this.favoriteCardModels, required this.onCardTap, super.key});
 
   final List<FavoriteCardModel> favoriteCardModels;
   final Function(FavoriteCardModel) onCardTap;
 
   @override
   Widget build(BuildContext context) {
+    final spacer = AppTheme.of(context).spacer;
+
     return RotatedBox(
         quarterTurns: 3,
         child: ListWheelScrollView.useDelegate(
@@ -21,18 +25,15 @@ class CardsScrollView extends StatelessWidget {
           childDelegate: ListWheelChildBuilderDelegate(
             childCount: favoriteCardModels.length,
             builder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20), 
-              child:  RotatedBox(
-                      quarterTurns: 1,
-                      child: FavoriteCard(
-                        favoriteCardModel: favoriteCardModels[index],                       
-                        onCardTap: onCardTap,
-                      )
-               )
-            ),
+                padding: EdgeInsets.symmetric(horizontal: spacer.sp20),
+                child: RotatedBox(
+                    quarterTurns: 1,
+                    child: FavoriteCard(
+                      favoriteCardModel: favoriteCardModels[index],
+                      onCardTap: onCardTap,
+                    ))),
           ),
           onSelectedItemChanged: (index) {},
-        )
-      );
+        ));
   }
 }

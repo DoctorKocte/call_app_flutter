@@ -17,13 +17,13 @@ enum SettingsTypes {
       case SettingsTypes.blocked:
         return Assets.images.lock;
       case SettingsTypes.favorites:
-        return Assets.images.edit;
+        return Assets.images.fillStar;
       case SettingsTypes.mute:
-        return Assets.images.edit;
+        return Assets.images.mute;
       case SettingsTypes.theme:
-        return Assets.images.edit;
+        return Assets.images.theme;
       case SettingsTypes.logout:
-        return Assets.images.edit;
+        return Assets.images.logout;
     }
   }
 

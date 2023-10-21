@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:call_app/features/main/domain/service/user_service.dart';
+import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_bloc.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_event.dart';
 import 'package:call_app/features/profile/presentation/bloc/user_update_state.dart';
-import 'package:call_app/features/main/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,6 +46,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final radius = appTheme.radius;
 
     return BlocProvider<UserUpdateBloc>(
         create: (context) => UserUpdateBloc(userService: widget.userService),
@@ -60,7 +61,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                         height: 128,
                         width: 128,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(64),
+                            borderRadius: radius.radius64,
                             gradient: LinearGradient(
                                 colors: colorScheme.gradients.rainbow))));
               }),
@@ -71,9 +72,6 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                   context
                       .read<UserUpdateBloc>()
                       .add(UserChangeImageEvent(imageString: img64));
-                  // final UserUpdateBloc userUpdateBloc =
-                  //     BlocProvider.of(context);
-                  // userUpdateBloc.add(UserChangeImageEvent(imageString: img64));
                 }
                 return Container(
                     clipBehavior: Clip.hardEdge,
@@ -81,7 +79,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                     height: 120,
                     width: 120,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(60),
+                        borderRadius: radius.radius60,
                         color: colorScheme.background.lightGray),
                     child: BlocBuilder<UserUpdateBloc, UserUpdateState>(
                         builder: (context, state) {

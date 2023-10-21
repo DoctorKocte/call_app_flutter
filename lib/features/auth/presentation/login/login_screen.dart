@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
+    final spacer = appTheme.spacer;
 
     return BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(authService: authService),
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: colorScheme.background.main,
             body: SingleChildScrollView(
                 child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                    padding: EdgeInsets.fromLTRB(spacer.sp20, 0, spacer.sp20, spacer.sp40),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

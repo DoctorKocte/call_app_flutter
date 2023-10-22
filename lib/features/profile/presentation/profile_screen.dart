@@ -40,14 +40,17 @@ class ProfileScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: spacer.sp24),
               child: AnimatedImageContainer(
                   userData: userData, userService: userService)),
-          Text('firstname lastname', style: textStyles.graphik18semibold),
-          Text('username',
+          Text(userData.firstName.isEmpty ? 'noname' : userData.firstName, style: textStyles.graphik18semibold),
+          Text(userData.username ?? '',
               style: textStyles.graphik15normal
                   .copyWith(color: colorScheme.textColor.secondary)),
           Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: spacer.sp16, vertical: spacer.sp24),
-              child: const SettingsList(settingsTypes: SettingsTypes.values)),
+              child: SettingsList(
+                settingsTypes: SettingsTypes.values,
+                onSettingTap: (settingType) { /* обработка нажатия на настройки */}
+              )),
         ],
       )),
     );

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +31,8 @@ class ContactView extends StatelessWidget {
                     color: colorScheme.background.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: (recentContact.contact.imageString != null)
-                      ? Image.memory(
-                          base64Decode(recentContact.contact.imageString!),
-                          fit: BoxFit.fill)
+                  child: (recentContact.contact.profileImage != null)
+                      ? recentContact.contact.profileImage
                       : Assets.images.addFriend.image()),
               const SizedBox(width: 20),
               Flexible(

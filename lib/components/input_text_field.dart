@@ -60,7 +60,6 @@ class _InputTextFieldState extends State<InputTextField> {
         SizedBox(
             height: 34,
             child: TextFormField(
-                cursorHeight: 16,
                 obscureText: widget.isObscureTextNeeded,
                 decoration: InputDecoration(
                   filled: true,

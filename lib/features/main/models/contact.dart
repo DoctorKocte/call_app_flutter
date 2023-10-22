@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:call_app/features/main/dto/contact_dto.dart';
+import 'package:flutter/material.dart';
 
 class Contact {
   Contact({
@@ -8,6 +11,7 @@ class Contact {
     this.firstName, 
     this.lastName,
     this.imageString,
+    this.profileImage,
     this.notice
   });
 
@@ -19,6 +23,7 @@ class Contact {
       lastName: dto.lastName,
       isFavorite: dto.isFavorite,
       imageString: dto.imageString,
+      profileImage: (dto.imageString != null) ? Image.memory(base64Decode(dto.imageString!), fit: BoxFit.fill) : null,
       notice: dto.notice
     );
   }
@@ -29,5 +34,6 @@ class Contact {
   String? lastName;
   bool isFavorite;
   String? imageString;
+  Image? profileImage;
   String? notice;
 }

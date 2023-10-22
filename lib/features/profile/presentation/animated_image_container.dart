@@ -25,7 +25,6 @@ class AnimatedImageContainer extends StatefulWidget {
 class _AnimatedImageContainerState extends State<AnimatedImageContainer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  String img64 = '';
 
   @override
   void initState() {
@@ -69,10 +68,10 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
           GestureDetector(
               onTap: pickImage,
               child: Builder(builder: (context) {
-                if (img64.isNotEmpty) {
+                if (widget.userData.imageString.isNotEmpty) {
                   context
                       .read<UserUpdateBloc>()
-                      .add(UserChangeImageEvent(imageString: img64));
+                      .add(UserChangeImageEvent(imageString: widget.userData.imageString));
                 }
                 return Container(
                     clipBehavior: Clip.hardEdge,
@@ -93,10 +92,8 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                                 : '#',
                             style: textStyles.graphik24bold),
                         UserUpdateSuccessState() =>
-                          widget.userData.imageString.isNotEmpty
-                              ? Image.memory(
-                                  base64Decode(widget.userData.imageString),
-                                  fit: BoxFit.fill)
+                          (widget.userData.profileImage != null)
+                              ? Image(image: widget.userData.profileImage!.image)
                               : Text(
                                   widget.userData.firstName.isNotEmpty
                                       ? widget.userData.firstName[0]
@@ -114,9 +111,8 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
       setState(() {
         final imagePath = file.path;
         final bytes = File(imagePath).readAsBytesSync();
-        final img64 = base64Encode(bytes);
-        this.img64 = img64;
-        widget.userData.imageString = img64;
+        widget.userData.imageString = base64Encode(bytes);
+        widget.userData.profileImage = Image.memory(base64Decode(widget.userData.imageString), fit: BoxFit.fill);
       });
     }
   }

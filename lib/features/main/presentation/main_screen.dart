@@ -3,6 +3,7 @@ import 'package:call_app/features/friend_profile/presentation/friend_profile_scr
 import 'package:call_app/features/main/domain/repository/user_repository.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/main/models/favorite_card_model.dart';
+import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
 import 'package:call_app/features/main/presentation/bloc/user_state.dart';
@@ -78,6 +79,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Scaffold(
             backgroundColor: colorScheme.background.main,
             appBar: AppBar(
+              forceMaterialTransparency: true,
                 title: const Text('Welcome'),
                 titleTextStyle: textStyles.graphik18semibold,
                 centerTitle: true,
@@ -131,6 +133,7 @@ class _MainScreenState extends State<MainScreen> {
                                       // без проверки на isFavorite, тк мало контактов и бэк не совсем готов
                                       favoriteCardModels: state
                                           .userData.contacts
+                                          //.where((contact) => contact.isFavorite).toList()
                                           .asMap()
                                           .map((index, contact) => MapEntry(
                                               index,
@@ -172,7 +175,7 @@ class _MainScreenState extends State<MainScreen> {
                           Padding(
                               padding: EdgeInsets.all(spacer.sp20),
                               // поменять на isNotEmpty для теста с recent contacts на акке valek
-                              child: state.userData.recentContacts.isEmpty
+                              child: state.userData.contacts.isEmpty
                                   ? Center(
                                       child: Text(
                                           "You don't have any recent contact now.\nCall anybody",
@@ -181,16 +184,16 @@ class _MainScreenState extends State<MainScreen> {
                                               .copyWith(height: 0.9)))
                                   : ContactsList(
                                       recentContacts:
-                                          state.userData.recentContacts
-                                      //  [
-                                      //     RecentContact(
-                                      //         date: DateTime.now(),
-                                      //         contact:
-                                      //             state.userData.contacts.first),
-                                      //     RecentContact(
-                                      //         date: DateTime.now(),
-                                      //         contact: state.userData.contacts.last)
-                                      //   ]
+                                         // state.userData.recentContacts
+                                       [
+                                          RecentContact(
+                                              date: DateTime.now(),
+                                              contact:
+                                                  state.userData.contacts.first),
+                                          RecentContact(
+                                              date: DateTime.now(),
+                                              contact: state.userData.contacts.last)
+                                        ]
                                       ))
                         ]));
                   })

@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
 class SettingsList extends StatelessWidget {
-  const SettingsList({required this.settingsTypes, super.key});
+  const SettingsList({required this.settingsTypes, required this.onSettingTap, super.key});
 
   final List<SettingsTypes> settingsTypes;
+  final Function(SettingsTypes) onSettingTap;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class SettingsList extends StatelessWidget {
             itemBuilder: (context, index) {
               return SettingView(
                 settingsType: settingsTypes[index],
+                onSettingTap: onSettingTap,
               );
             }));
   }

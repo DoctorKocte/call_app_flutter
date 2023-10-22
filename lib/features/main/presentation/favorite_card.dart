@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:flutter/material.dart';
@@ -55,10 +53,7 @@ class FavoriteCard extends StatelessWidget {
                             ),
                             child: (favoriteCardModel.contact.imageString !=
                                     null)
-                                ? Image.memory(
-                                    base64Decode(
-                                        favoriteCardModel.contact.imageString!),
-                                    fit: BoxFit.fill)
+                                ? favoriteCardModel.contact.profileImage
                                 : Assets.images.addFriend.image())),
                     const SizedBox(height: 48),
                     Text(

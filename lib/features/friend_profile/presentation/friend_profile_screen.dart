@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/components/primary_button.dart';
 import 'package:call_app/features/friend_profile/models/button_model.dart';
@@ -35,11 +33,8 @@ class FriendProfileScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Hero(
                       tag: 'imageHero ${favoriteCardModel.contact.id}',
-                      child: (favoriteCardModel.contact.imageString != null)
-                          ? Image.memory(
-                              base64Decode(
-                                  favoriteCardModel.contact.imageString!),
-                              fit: BoxFit.cover)
+                      child: (favoriteCardModel.contact.profileImage != null)
+                          ? favoriteCardModel.contact.profileImage!
                           : Assets.images.addFriend.image(fit: BoxFit.cover))),
               Align(
                 alignment: AlignmentDirectional.bottomStart,

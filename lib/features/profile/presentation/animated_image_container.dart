@@ -45,7 +45,8 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles =
+        appTheme.textStyles.withColor(colorScheme.textColor.black);
     final radius = appTheme.radius;
 
     return BlocProvider<UserUpdateBloc>(
@@ -90,9 +91,7 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                             widget.userData.firstName.isNotEmpty
                                 ? widget.userData.firstName[0]
                                 : '#',
-                            style: textStyles
-                                .withColor(colorScheme.textColor.black)
-                                .graphik24bold),
+                            style: textStyles.graphik24bold),
                         UserUpdateSuccessState() =>
                           widget.userData.imageString.isNotEmpty
                               ? Image.memory(
@@ -101,10 +100,8 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                               : Text(
                                   widget.userData.firstName.isNotEmpty
                                       ? widget.userData.firstName[0]
-                                      : '',
-                                  style: textStyles
-                                      .withColor(colorScheme.textColor.black)
-                                      .graphik24bold)
+                                      : '#',
+                                  style: textStyles.graphik24bold)
                       };
                     }));
               }))

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:call_app/network/api_response_model.dart';
 import 'package:call_app/services/token_service/token_service.dart';
 import 'package:dio/dio.dart';
@@ -38,7 +36,9 @@ class RequestService implements RequestServiceProtocol {
   final TokenService tokenService;
 
   @override
-  TokenService getTokenService() { return tokenService; }
+  TokenService getTokenService() {
+    return tokenService;
+  }
 
   @override
   Future<Map<String, dynamic>?> makeDataRequest(
@@ -74,7 +74,6 @@ class RequestService implements RequestServiceProtocol {
       required String path,
       required Map<String, dynamic> headers,
       required Map<String, dynamic> data}) async {
-
     final customHeaders = <String, dynamic>{
       'Content-Type': 'application/json',
       'accept': 'application/json',
@@ -98,17 +97,16 @@ class RequestService implements RequestServiceProtocol {
     if (responseData.success) {
       return responseData.data;
     } else {
-      log('error');
+      return null;
     }
   }
 
-    @override
+  @override
   Future<SuccessApiResponse> makeSuccessAuthorizedRequest(
       {required RequestMethod requestMethod,
       required String path,
       required Map<String, dynamic> headers,
       required Map<String, dynamic> data}) async {
-        
     final customHeaders = <String, dynamic>{
       'Content-Type': 'application/json',
       'accept': 'application/json',

@@ -23,11 +23,11 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles = appTheme.textStyles.withColor(titleColor);
     
     return 
      GestureDetector(
-      onTap: onPressed,
+      onTap: isLoading ? null : onPressed,
       child: 
        Container(
           height: 56,
@@ -40,10 +40,9 @@ class PrimaryButton extends StatelessWidget {
             ? Center(child: CircularProgressIndicator(color: colorScheme.background.white))
             : Center(child: Text(
               buttonText, 
-              style: textStyles.withColor(titleColor).graphik15normal
+              style: textStyles.graphik15normal
             )),
           ),
-       
       );
   }
 }

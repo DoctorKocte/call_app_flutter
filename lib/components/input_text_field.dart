@@ -4,15 +4,17 @@ import 'package:open_ui/open_ui.dart';
 class InputTextField extends StatefulWidget {
   const InputTextField(
       {required this.textFieldTitle,
+      required this.text,
       required this.onChanged,
-      this.onClearButtonPressed,
+      required this.onClearButtonPressed,
       this.isObscureTextNeeded = false,
       super.key});
 
   final String textFieldTitle;
+  final String? text;
   final bool isObscureTextNeeded;
   final void Function(String)? onChanged;
-  final void Function()? onClearButtonPressed;
+  final Function(String) onClearButtonPressed;
 
   @override
   State<InputTextField> createState() => _InputTextFieldState();
@@ -34,6 +36,14 @@ class _InputTextFieldState extends State<InputTextField> {
   }
 
   @override
+  void didUpdateWidget(InputTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.text != null) {
+      _controller.text = widget.text!;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
@@ -50,6 +60,7 @@ class _InputTextFieldState extends State<InputTextField> {
         SizedBox(
             height: 34,
             child: TextFormField(
+                cursorHeight: 16,
                 obscureText: widget.isObscureTextNeeded,
                 decoration: InputDecoration(
                   filled: true,
@@ -69,11 +80,9 @@ class _InputTextFieldState extends State<InputTextField> {
                       ? null
                       : IconButton(
                           highlightColor: Colors.transparent,
-                          onPressed: // widget.onClearButtonPressed,
-                              () {
-                            setState(() {
-                              _controller.clear();
-                            });
+                          onPressed: () {
+                            _controller.clear();
+                            widget.onClearButtonPressed(_controller.text);
                           },
                           icon: const Icon(Icons.close_rounded),
                         ),

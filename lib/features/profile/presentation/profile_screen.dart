@@ -18,15 +18,15 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles =
+        appTheme.textStyles.withColor(colorScheme.textColor.black);
     final spacer = appTheme.spacer;
 
     return Scaffold(
       backgroundColor: colorScheme.background.main,
       appBar: AppBar(
         title: const Text('Profile'),
-        titleTextStyle:
-            textStyles.withColor(colorScheme.textColor.black).graphik18semibold,
+        titleTextStyle: textStyles.graphik18semibold,
         foregroundColor: colorScheme.textColor.black,
         centerTitle: true,
         surfaceTintColor: Colors.transparent,
@@ -40,14 +40,10 @@ class ProfileScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: spacer.sp24),
               child: AnimatedImageContainer(
                   userData: userData, userService: userService)),
-          Text('firstname lastname',
-              style: textStyles
-                  .withColor(colorScheme.textColor.black)
-                  .graphik18semibold),
+          Text('firstname lastname', style: textStyles.graphik18semibold),
           Text('username',
-              style: textStyles
-                  .withColor(colorScheme.textColor.secondary)
-                  .graphik15normal),
+              style: textStyles.graphik15normal
+                  .copyWith(color: colorScheme.textColor.secondary)),
           Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: spacer.sp16, vertical: spacer.sp24),

@@ -1,5 +1,6 @@
 import 'package:call_app/features/main/dto/user_dto.dart';
 import 'package:call_app/features/main/models/user_model.dart';
+import 'package:call_app/network/api_error.dart';
 import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:dartz/dartz.dart';
@@ -25,7 +26,7 @@ class UserRepository {
         final user = User.fromDTO(dto: userDTO);
         return Right(user);
       } else {
-        return throw Exception('Failed to load user: data null');
+        return Left(ApiError.loadUser.errorString);
       } 
     } on String catch (e) {
       return Left(e);
@@ -42,9 +43,9 @@ class UserRepository {
     );
 
     if (responseData.success) {
-        return Right(());
+        return const Right(());
       } else {
-        return Left('error load image');
+        return Left(ApiError.loadImage.errorString);
       } 
     } on String catch (e) {
       return Left(e);

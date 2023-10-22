@@ -14,7 +14,8 @@ class ContactView extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles =
+        appTheme.textStyles.withColor(colorScheme.textColor.darkGray);
     final spacer = appTheme.spacer;
     final radius = appTheme.radius;
 
@@ -37,14 +38,11 @@ class ContactView extends StatelessWidget {
                           base64Decode(recentContact.contact.imageString!),
                           fit: BoxFit.fill)
                       : Assets.images.addFriend.image()),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Flexible(
                   child: Text(recentContact.contact.username ?? 'no name',
-                      //overflow: TextOverflow.fade,
-                      style: textStyles
-                          .withColor(colorScheme.textColor.darkGray)
-                          .graphik16semibold)),
-              Spacer()
+                      style: textStyles.graphik16semibold)),
+              const Spacer()
             ])));
   }
 }

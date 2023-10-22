@@ -18,7 +18,8 @@ class GridSpacer {
     required this.sp56,
     required this.sp60,
     required this.sp64,
-    required this.sp80
+    required this.sp80,
+    required this.sp100
   });
 
   factory GridSpacer.regular() => const GridSpacer(
@@ -40,7 +41,8 @@ class GridSpacer {
         sp56: 56,
         sp60: 60,
         sp64: 64,
-        sp80: 80
+        sp80: 80,
+        sp100: 100
       );
 
   final double sp4;
@@ -62,4 +64,5 @@ class GridSpacer {
   final double sp60;
   final double sp64;
   final double sp80;
+  final double sp100;
 }

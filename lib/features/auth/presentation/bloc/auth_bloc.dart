@@ -16,8 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());
-    final result = await authService.login(
-        username: event.username, password: event.password);
+    final result = await authService.login(loginModel: event.loginModel);
 
     result.fold(
       (l) => emit(AuthErrorState(errorString: l)),
@@ -30,12 +29,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoadingState());
-    final result = await authService.register(
-        username: event.username,
-        password: event.password,
-        phoneNumber: event.phoneNumber,
-        firstName: event.firstName,
-        lastName: event.lastName);
+    final result =
+        await authService.register(registerModel: event.registerModel);
 
     result.fold(
       (l) => emit(AuthErrorState(errorString: l)),

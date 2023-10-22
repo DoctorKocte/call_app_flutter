@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const CallApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class CallApp extends StatelessWidget {
+  const CallApp({super.key});
 
   @override
   Widget build(BuildContext context) {

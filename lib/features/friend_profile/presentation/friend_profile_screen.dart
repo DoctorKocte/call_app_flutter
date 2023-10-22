@@ -17,17 +17,21 @@ class FriendProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles =
+        appTheme.textStyles.withColor(colorScheme.textColor.white);
+    final radius = appTheme.radius;
+    final spacer = appTheme.spacer;
+    final imageHeight = MediaQuery.of(context).size.height * 0.64;
 
     return Scaffold(
       extendBody: true,
       body: Stack(children: [
         SizedBox(
-            height: MediaQuery.of(context).size.height * 0.64,
+            height: imageHeight,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.64,
+                  height: imageHeight,
                   width: MediaQuery.of(context).size.width,
                   child: Hero(
                       tag: 'imageHero ${favoriteCardModel.contact.id}',
@@ -40,9 +44,10 @@ class FriendProfileScreen extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.bottomStart,
                 child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 100, 60),
+                    padding: EdgeInsets.fromLTRB(
+                        spacer.sp10, 0, spacer.sp100, spacer.sp60),
                     child: BlurButtonsView(
-                      buttonModels: [
+                      buttonModels: const [
                         ButtonModel.call,
                         ButtonModel.video,
                         ButtonModel.favorite
@@ -56,32 +61,25 @@ class FriendProfileScreen extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(18),
-                      topRight: Radius.circular(18)),
+                  borderRadius: radius.radius18Top,
                   color: favoriteCardModel.backgroundColor),
               child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 30, 16, 44),
+                  padding: EdgeInsets.fromLTRB(
+                      spacer.sp16, spacer.sp28, spacer.sp16, spacer.sp44),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                           favoriteCardModel.contact.firstName ??
                               favoriteCardModel.contact.username ??
-                              '',
-                          style: textStyles
-                              .withColor(colorScheme.textColor.white)
-                              .graphik36semibold),
+                              'no name',
+                          style: textStyles.graphik36semibold),
                       Text(favoriteCardModel.contact.lastName ?? '',
-                          style: textStyles
-                              .withColor(colorScheme.textColor.white)
-                              .graphik28light),
-                      Flexible(child: 
-                      Text(favoriteCardModel.contact.notice ?? '',
-                          style: textStyles
-                              .withColor(colorScheme.textColor.white)
-                              .graphik20normal)),
-                      Spacer(),
+                          style: textStyles.graphik28light),
+                      Flexible(
+                          child: Text(favoriteCardModel.contact.notice ?? '',
+                              style: textStyles.graphik20normal)),
+                      const Spacer(),
                       PrimaryButton(
                           buttonText: 'Close',
                           titleColor: colorScheme.textColor.white,

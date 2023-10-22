@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget(
+class SegmentControl extends StatefulWidget {
+  const SegmentControl(
       {required this.tabsTitles, required this.onTap, super.key});
 
   final List<String> tabsTitles;
   final Function(int) onTap;
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<SegmentControl> createState() => _SegmentControlState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget>
+class _SegmentControlState extends State<SegmentControl>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 

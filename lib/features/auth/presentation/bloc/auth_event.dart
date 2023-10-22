@@ -1,24 +1,15 @@
+import 'package:call_app/features/auth/models/login_model.dart';
+
 sealed class AuthEvent {}
 
 class AuthLoginEvent extends AuthEvent {
-  AuthLoginEvent({required this.username, required this.password});
+  AuthLoginEvent({required this.loginModel});
 
-  String username;
-  String password;
+  LoginModel loginModel;
 }
 
 class AuthRegisterEvent extends AuthEvent {
-  AuthRegisterEvent({
-    required this.username, 
-    required this.password,
-    required this.phoneNumber,
-    this.firstName,
-    this.lastName
-  });
+  AuthRegisterEvent({required this.registerModel});
 
-  String username;
-  String password;
-  String phoneNumber;
-  String? firstName;
-  String? lastName;
+  RegisterModel registerModel;
 }

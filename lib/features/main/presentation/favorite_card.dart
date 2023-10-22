@@ -16,7 +16,8 @@ class FavoriteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context);
     final colorScheme = appTheme.colorScheme;
-    final textStyles = appTheme.textStyles;
+    final textStyles =
+        appTheme.textStyles.withColor(colorScheme.textColor.white);
     final spacer = appTheme.spacer;
     final radius = appTheme.radius;
 
@@ -59,24 +60,18 @@ class FavoriteCard extends StatelessWidget {
                                         favoriteCardModel.contact.imageString!),
                                     fit: BoxFit.fill)
                                 : Assets.images.addFriend.image())),
-                    SizedBox(height: 48),
+                    const SizedBox(height: 48),
                     Text(
                         favoriteCardModel.contact.firstName ??
                             favoriteCardModel.contact.username ??
-                            '',
-                        style: textStyles
-                            .withColor(colorScheme.textColor.white)
-                            .graphik20bold),
+                            'no name',
+                        style: textStyles.graphik20bold),
                     Text(favoriteCardModel.contact.lastName ?? '',
-                        style: textStyles
-                            .withColor(colorScheme.textColor.white)
-                            .graphik24normal),
-                    SizedBox(height: 20),
+                        style: textStyles.graphik24normal),
+                    const SizedBox(height: 20),
                     Text(favoriteCardModel.contact.notice ?? '',
-                        style: textStyles
-                            .withColor(colorScheme.textColor.white)
-                            .graphik14normal),
-                    Spacer(),
+                        style: textStyles.graphik14normal),
+                    const Spacer(),
                     Center(
                         child: Container(
                             height: 42,

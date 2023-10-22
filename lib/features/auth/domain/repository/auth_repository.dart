@@ -1,4 +1,6 @@
+import 'package:call_app/features/auth/models/login_model.dart';
 import 'package:call_app/features/auth/models/token_model.dart';
+import 'package:call_app/network/api_error.dart';
 import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:call_app/services/token_service/entity/token_dto.dart';
@@ -11,13 +13,13 @@ class AuthRepository {
   final RequestServiceProtocol requestService;
 
   Future<Either<String, TokenModel>> login(
-      {required String username, required String password}) async {
+      {required LoginModel loginModel}) async {
     try {
       final responseData = await requestService.makeDataRequest(
           requestMethod: RequestMethod.post,
           path: endpointConfig.loginEndpoint,
           headers: {},
-          data: {'username': username, 'password': password});
+          data: {'username': loginModel.username, 'password': loginModel.password});
 
       if (responseData != null) {
         final tokenDTO = TokenDTO.fromJson(responseData);
@@ -27,7 +29,7 @@ class AuthRepository {
             tokenModel.accessToken, tokenModel.refreshToken);
         return Right(tokenModel);
       } else {
-        return Left('data = null');
+        return Left(ApiError.emptyResponse.errorString);
       }
     } on String catch (e) {
       return Left(e);
@@ -35,22 +37,18 @@ class AuthRepository {
   }
 
   Future<Either<String, TokenModel>> register(
-      {required String username,
-      required String password,
-      required String phoneNumber,
-      String? firstName,
-      String? lastName}) async {
+      {required RegisterModel registerModel}) async {
     try {
       final responseData = await requestService.makeDataRequest(
           requestMethod: RequestMethod.post,
           path: endpointConfig.registerEndpoint,
           headers: {},
           data: {
-            'username': username,
-            'password': password,
-            'phoneNumber': phoneNumber,
-            'firstName': firstName,
-            'lastName': lastName
+            'username': registerModel.username,
+            'password': registerModel.password,
+            'phoneNumber': registerModel.phoneNumber,
+            'firstName': registerModel.firstName,
+            'lastName': registerModel.lastName
           });
       if (responseData != null) {
         final tokenDTO = TokenDTO.fromJson(responseData);
@@ -60,7 +58,7 @@ class AuthRepository {
             tokenModel.accessToken, tokenModel.refreshToken);
         return Right(tokenModel);
       } else {
-        return Left('data = null');
+        return Left(ApiError.emptyResponse.errorString);
       }
     } on String catch (e) {
       return Left(e);

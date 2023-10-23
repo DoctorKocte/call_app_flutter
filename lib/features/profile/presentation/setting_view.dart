@@ -35,7 +35,7 @@ class SettingView extends StatelessWidget {
                     child: Padding(
                         padding: EdgeInsets.all(spacer.sp6),
                         child: settingsType.image
-                            .image(color: colorScheme.background.white)),
+                            .image(color: colorScheme.icons.white)),
                   ),
                   const SizedBox(width: 8),
                   Text(settingsType.title,

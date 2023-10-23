@@ -76,9 +76,9 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
                         ? widget.favoriteCardModel.contact.profileImage!
                         : Assets.images.addFriend.image(fit: BoxFit.cover)))),
         Positioned(
-            bottom: containerHeight + 20,
-            left: 10,
-            right: 100,
+            bottom: containerHeight + spacer.sp20,
+            left: spacer.sp10,
+            right: spacer.sp100,
             child: BlurButtonsView(
               buttonModels: const [
                 ButtonModel.call,

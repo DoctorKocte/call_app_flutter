@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:call_app/assets/assets.gen.dart';
 import 'package:call_app/components/primary_button.dart';
 import 'package:call_app/features/friend_profile/models/button_model.dart';
@@ -5,11 +7,44 @@ import 'package:call_app/features/friend_profile/presentation/blur_buttons_view.
 import 'package:call_app/features/main/models/favorite_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:open_ui/open_ui.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
-class FriendProfileScreen extends StatelessWidget {
+class FriendProfileScreen extends StatefulWidget {
   const FriendProfileScreen({required this.favoriteCardModel, super.key});
-
   final FavoriteCardModel favoriteCardModel;
+
+  @override
+  _FriendProfileScreenState createState() => _FriendProfileScreenState();
+}
+
+class _FriendProfileScreenState extends State<FriendProfileScreen> {
+  double x = 0;
+  double y = 0;
+  double z = 0;
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+
+  @override
+  void initState() {
+    _streamSubscriptions.add(gyroscopeEvents.listen(
+      (event) {
+        setState(() {
+          x = event.x;
+          y = event.y;
+          z = event.z;
+        });
+      },
+      cancelOnError: true,
+    ));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +63,24 @@ class FriendProfileScreen extends StatelessWidget {
             height: imageHeight,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
-              SizedBox(
-                  height: imageHeight,
-                  width: MediaQuery.of(context).size.width,
-                  child: Hero(
-                      tag: 'imageHero ${favoriteCardModel.contact.id}',
-                      child: (favoriteCardModel.contact.profileImage != null)
-                          ? favoriteCardModel.contact.profileImage!
-                          : Assets.images.addFriend.image(fit: BoxFit.cover))),
+              Transform(
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.003)
+                    ..rotateX(x)
+                    ..rotateY(y),
+                  alignment: FractionalOffset.center,
+                  child: SizedBox(
+                      height: imageHeight,
+                      width: MediaQuery.of(context).size.width,
+                      child: Hero(
+                          tag:
+                              'imageHero ${widget.favoriteCardModel.contact.id}',
+                          child: (widget
+                                      .favoriteCardModel.contact.profileImage !=
+                                  null)
+                              ? widget.favoriteCardModel.contact.profileImage!
+                              : Assets.images.addFriend
+                                  .image(fit: BoxFit.cover)))),
               Align(
                 alignment: AlignmentDirectional.bottomStart,
                 child: Padding(
@@ -47,7 +92,7 @@ class FriendProfileScreen extends StatelessWidget {
                         ButtonModel.video,
                         ButtonModel.favorite
                       ],
-                      buttonsColor: favoriteCardModel.buttonBackground,
+                      buttonsColor: widget.favoriteCardModel.buttonBackground,
                     )),
               )
             ])),
@@ -57,7 +102,7 @@ class FriendProfileScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
                   borderRadius: radius.radius18Top,
-                  color: favoriteCardModel.backgroundColor),
+                  color: widget.favoriteCardModel.backgroundColor),
               child: Padding(
                   padding: EdgeInsets.fromLTRB(
                       spacer.sp16, spacer.sp28, spacer.sp16, spacer.sp44),
@@ -65,14 +110,15 @@ class FriendProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          favoriteCardModel.contact.firstName ??
-                              favoriteCardModel.contact.username ??
+                          widget.favoriteCardModel.contact.firstName ??
+                              widget.favoriteCardModel.contact.username ??
                               'no name',
                           style: textStyles.graphik36semibold),
-                      Text(favoriteCardModel.contact.lastName ?? '',
+                      Text(widget.favoriteCardModel.contact.lastName ?? '',
                           style: textStyles.graphik28light),
                       Flexible(
-                          child: Text(favoriteCardModel.contact.notice ?? '',
+                          child: Text(
+                              widget.favoriteCardModel.contact.notice ?? '',
                               style: textStyles.graphik20normal)),
                       const Spacer(),
                       PrimaryButton(
@@ -82,7 +128,7 @@ class FriendProfileScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          color: favoriteCardModel.buttonBackground)
+                          color: widget.favoriteCardModel.buttonBackground)
                     ],
                   )),
             ))

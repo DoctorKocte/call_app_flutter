@@ -104,7 +104,6 @@ class _MainScreenState extends State<MainScreen> {
                 ]),
             body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
               return switch (state) {
-                UserEmptyState() => const Center(child: Text('List is empty.')),
                 UserLoadingState() =>
                   const Center(child: CircularProgressIndicator()),
                 UserErrorState() =>

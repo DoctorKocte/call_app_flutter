@@ -55,6 +55,8 @@ class RequestService implements RequestServiceProtocol {
 
     final options = Options(
       headers: customHeaders,
+      sendTimeout: const Duration(seconds: 60), // 60 seconds
+      receiveTimeout: const Duration(seconds: 60)
     );
     
     try {
@@ -73,7 +75,10 @@ class RequestService implements RequestServiceProtocol {
       } else {
         return Left(ApiError.emptyResponse.errorString);
       }
-    } catch (e) {
+    } on DioException catch (e) {
+      if(e.type == DioExceptionType.connectionTimeout) {
+        return Left(ApiError.timeout.errorString);
+      }
       return Left(e.toString());
     }
   }

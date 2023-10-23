@@ -4,8 +4,6 @@ sealed class UserState {
   const UserState();
 }
 
-class UserEmptyState extends UserState {}
-
 class UserLoadingState extends UserState {}
 
 class UserDataState extends UserState {

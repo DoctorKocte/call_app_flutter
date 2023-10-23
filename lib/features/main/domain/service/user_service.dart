@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 final class UserService {
   const UserService({required this.userRepository});
 
-  final UserRepository userRepository;
+  final UserRepositoryProtocol userRepository;
 
   Future<Either<String, User>> getUserData() async {
     final result = await userRepository.getUserData();

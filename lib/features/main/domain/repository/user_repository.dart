@@ -5,12 +5,18 @@ import 'package:call_app/network/endpoint_config.dart';
 import 'package:call_app/network/request_service.dart';
 import 'package:dartz/dartz.dart';
 
-class UserRepository {
+abstract class UserRepositoryProtocol {
+  Future<Either<String, User>> getUserData();
+  Future<Either<String, void>> changeProfileImage({required String imageString});
+}
+
+class UserRepository implements UserRepositoryProtocol {
   UserRepository({required this.requestService, required this.endpointConfig});
 
   final EndpointConfig endpointConfig;
   final RequestServiceProtocol requestService;
 
+  @override
   Future<Either<String, User>> getUserData() async {
     try {
       final responseData = await requestService.makeAuthorizedRequest(
@@ -31,6 +37,7 @@ class UserRepository {
     }
   }
 
+  @override
   Future<Either<String, void>> changeProfileImage(
       {required String imageString}) async {
     try {

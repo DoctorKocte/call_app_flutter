@@ -55,51 +55,42 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
     final radius = appTheme.radius;
     final spacer = appTheme.spacer;
     final imageHeight = MediaQuery.of(context).size.height * 0.64;
+    final containerHeight = MediaQuery.of(context).size.height * 0.4;
 
     return Scaffold(
       extendBody: true,
       body: Stack(children: [
-        SizedBox(
-            height: imageHeight,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(children: [
-              Transform(
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.003)
-                    ..rotateX(x)
-                    ..rotateY(y),
-                  alignment: FractionalOffset.center,
-                  child: SizedBox(
-                      height: imageHeight,
-                      width: MediaQuery.of(context).size.width,
-                      child: Hero(
-                          tag:
-                              'imageHero ${widget.favoriteCardModel.contact.id}',
-                          child: (widget
-                                      .favoriteCardModel.contact.profileImage !=
-                                  null)
-                              ? widget.favoriteCardModel.contact.profileImage!
-                              : Assets.images.addFriend
-                                  .image(fit: BoxFit.cover)))),
-              Align(
-                alignment: AlignmentDirectional.bottomStart,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        spacer.sp10, 0, spacer.sp100, spacer.sp60),
-                    child: BlurButtonsView(
-                      buttonModels: const [
-                        ButtonModel.call,
-                        ButtonModel.video,
-                        ButtonModel.favorite
-                      ],
-                      buttonsColor: widget.favoriteCardModel.buttonBackground,
-                    )),
-              )
-            ])),
+        Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.003)
+              ..rotateX(x)
+              ..rotateY(y),
+            alignment: FractionalOffset.center,
+            child: SizedBox(
+                height: imageHeight,
+                width: MediaQuery.of(context).size.width,
+                child: Hero(
+                    tag: 'imageHero ${widget.favoriteCardModel.contact.id}',
+                    child: (widget.favoriteCardModel.contact.profileImage !=
+                            null)
+                        ? widget.favoriteCardModel.contact.profileImage!
+                        : Assets.images.addFriend.image(fit: BoxFit.cover)))),
+        Positioned(
+            bottom: containerHeight + 20,
+            left: 10,
+            right: 100,
+            child: BlurButtonsView(
+              buttonModels: const [
+                ButtonModel.call,
+                ButtonModel.video,
+                ButtonModel.favorite
+              ],
+              buttonsColor: widget.favoriteCardModel.buttonBackground,
+            )),
         Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: containerHeight,
               decoration: BoxDecoration(
                   borderRadius: radius.radius18Top,
                   color: widget.favoriteCardModel.backgroundColor),

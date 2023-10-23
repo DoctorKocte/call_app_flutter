@@ -1,5 +1,7 @@
+import 'package:call_app/network/api_error.dart';
 import 'package:call_app/network/api_response_model.dart';
 import 'package:call_app/services/token_service/token_service.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 enum RequestMethod {
@@ -10,7 +12,7 @@ enum RequestMethod {
 abstract class RequestServiceProtocol {
   TokenService getTokenService();
 
-  Future<Map<String, dynamic>?> makeDataRequest(
+  Future<Either<String, Map<String, dynamic>?>> makeDataRequest(
       {required RequestMethod requestMethod,
       required String path,
       required Map<String, dynamic> headers,
@@ -41,7 +43,7 @@ class RequestService implements RequestServiceProtocol {
   }
 
   @override
-  Future<Map<String, dynamic>?> makeDataRequest(
+  Future<Either<String, Map<String, dynamic>?>> makeDataRequest(
       {required RequestMethod requestMethod,
       required String path,
       required Map<String, dynamic> headers,
@@ -54,18 +56,26 @@ class RequestService implements RequestServiceProtocol {
     final options = Options(
       headers: customHeaders,
     );
+    
+    try {
+      Response<dynamic> response;
 
-    Response<dynamic> response;
+      switch (requestMethod) {
+        case RequestMethod.get:
+          response = await dio.get(path, options: options, data: data);
+        case RequestMethod.post:
+          response = await dio.post(path, options: options, data: data);
+      }
 
-    switch (requestMethod) {
-      case RequestMethod.get:
-        response = await dio.get(path, options: options, data: data);
-      case RequestMethod.post:
-        response = await dio.post(path, options: options, data: data);
+      final responseData = ApiResponse.parseBody(response.data);
+      if (responseData.success) {
+        return Right(responseData.data);
+      } else {
+        return Left(ApiError.emptyResponse.errorString);
+      }
+    } catch (e) {
+      return Left(e.toString());
     }
-
-    final responseData = ApiResponse.parseBody(response.data);
-    return responseData.data;
   }
 
   @override

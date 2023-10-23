@@ -25,11 +25,11 @@ class ContactView extends StatelessWidget {
             child: Row(children: [
               Container(
                   clipBehavior: Clip.hardEdge,
-                  height: 40,
-                  width: 40,
+                  height: 42,
+                  width: 42,
                   decoration: BoxDecoration(
                     color: colorScheme.background.white,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: radius.radius21,
                   ),
                   child: (recentContact.contact.profileImage != null)
                       ? recentContact.contact.profileImage

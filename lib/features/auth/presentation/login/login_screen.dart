@@ -18,8 +18,6 @@ import 'package:open_ui/open_ui.dart';
 enum LoginType {
   email,
   phoneNumber;
-
-  int get intValue => index;
 }
 
 class LoginScreen extends StatefulWidget {
@@ -63,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final colorScheme = appTheme.colorScheme;
     final textStyles = appTheme.textStyles;
     final spacer = appTheme.spacer;
+    final tabsTitles = ['Username', 'Phone number'];
 
     return BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(authService: authService),
@@ -90,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       colorScheme.textColor.disableSecondary)),
                           const SizedBox(height: 56),
                           SegmentControl(
-                            tabsTitles: const ['Username', 'Phone number'],
+                            tabsTitles: tabsTitles,
                             onTap: (tabIndex) {
                               setState(() {
                                 isLoginTypeChanged.value = true;
@@ -98,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ..username = ''
                                   ..password = '';
                                 selectedLoginType =
-                                    tabIndex == LoginType.email.intValue
+                                    tabIndex == LoginType.email.index
                                         ? LoginType.email
                                         : LoginType.phoneNumber;
                               });
@@ -111,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return LoginTextFieldsView(
                                     loginType: selectedLoginType,
                                     loginModel: loginModel,
+                                    tabsTitles: tabsTitles,
                                     onChanged: (loginModel) {
                                       setState(() {
                                         this.loginModel.username =

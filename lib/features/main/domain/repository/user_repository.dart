@@ -12,41 +12,39 @@ class UserRepository {
   final RequestServiceProtocol requestService;
 
   Future<Either<String, User>> getUserData() async {
- 
     try {
-    final responseData = await requestService.makeAuthorizedRequest(
-      requestMethod: RequestMethod.get,
-      path: endpointConfig.userDataEndpoint, 
-      headers: <String, dynamic>{}, 
-      data: {}
-    );
+      final responseData = await requestService.makeAuthorizedRequest(
+          requestMethod: RequestMethod.get,
+          path: endpointConfig.userDataEndpoint,
+          headers: <String, dynamic>{},
+          data: {});
 
-    if (responseData != null) {
+      if (responseData != null) {
         final userDTO = UserDTO.fromJson(responseData['user']);
         final user = User.fromDTO(dto: userDTO);
         return Right(user);
       } else {
         return Left(ApiError.loadUser.errorString);
-      } 
+      }
     } on String catch (e) {
       return Left(e);
     }
   }
 
-  Future<Either<String, void>> changeProfileImage({required String imageString}) async {
+  Future<Either<String, void>> changeProfileImage(
+      {required String imageString}) async {
     try {
-    final responseData = await requestService.makeSuccessAuthorizedRequest(
-      requestMethod: RequestMethod.post,
-      path: endpointConfig.changeProfileImageEndpoint, 
-      headers: <String, dynamic>{}, 
-      data: {'imageString': imageString}
-    );
+      final responseData = await requestService.makeSuccessAuthorizedRequest(
+          requestMethod: RequestMethod.post,
+          path: endpointConfig.changeProfileImageEndpoint,
+          headers: <String, dynamic>{},
+          data: {'imageString': imageString});
 
-    if (responseData.success) {
+      if (responseData.success) {
         return const Right(());
       } else {
         return Left(ApiError.loadImage.errorString);
-      } 
+      }
     } on String catch (e) {
       return Left(e);
     }

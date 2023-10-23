@@ -6,12 +6,19 @@ import 'package:call_app/network/request_service.dart';
 import 'package:call_app/services/token_service/entity/token_dto.dart';
 import 'package:dartz/dartz.dart';
 
-class AuthRepository {
+abstract class AuthRepositoryProtocol {
+  Future<Either<String, TokenModel>> login({required LoginModel loginModel});
+  Future<Either<String, TokenModel>> register(
+      {required RegisterModel registerModel});
+}
+
+class AuthRepository implements AuthRepositoryProtocol {
   AuthRepository({required this.requestService, required this.endpointConfig});
 
   final EndpointConfig endpointConfig;
   final RequestServiceProtocol requestService;
 
+  @override
   Future<Either<String, TokenModel>> login(
       {required LoginModel loginModel}) async {
     try {
@@ -19,23 +26,40 @@ class AuthRepository {
           requestMethod: RequestMethod.post,
           path: endpointConfig.loginEndpoint,
           headers: {},
-          data: {'username': loginModel.username, 'password': loginModel.password});
+          data: {
+            'username': loginModel.username,
+            'password': loginModel.password
+          });
 
-      if (responseData != null) {
-        final tokenDTO = TokenDTO.fromJson(responseData);
-        final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
-        final tokenService = requestService.getTokenService();
-        await tokenService.setTokens(
-            tokenModel.accessToken, tokenModel.refreshToken);
-        return Right(tokenModel);
-      } else {
-        return Left(ApiError.emptyResponse.errorString);
-      }
+      return responseData.fold(Left.new, (r) async {
+        if (r != null) {
+          final tokenDTO = TokenDTO.fromJson(r);
+          final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
+          await requestService
+              .getTokenService()
+              .setTokens(tokenModel.accessToken, tokenModel.refreshToken);
+          return Right(tokenModel);
+        } else {
+          return Left(ApiError.loadUser.errorString);
+        }
+      });
+
+      // if (responseData != null) {
+      //   final tokenDTO = TokenDTO.fromJson(responseData);
+      //   final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
+      //   final tokenService = requestService.getTokenService();
+      //   await tokenService.setTokens(
+      //       tokenModel.accessToken, tokenModel.refreshToken);
+      //   return Right(tokenModel);
+      // } else {
+      //   return Left(ApiError.emptyResponse.errorString);
+      // }
     } on String catch (e) {
       return Left(e);
     }
   }
 
+  @override
   Future<Either<String, TokenModel>> register(
       {required RegisterModel registerModel}) async {
     try {
@@ -50,16 +74,29 @@ class AuthRepository {
             'firstName': registerModel.firstName,
             'lastName': registerModel.lastName
           });
-      if (responseData != null) {
-        final tokenDTO = TokenDTO.fromJson(responseData);
-        final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
-        final tokenService = requestService.getTokenService();
-        await tokenService.setTokens(
-            tokenModel.accessToken, tokenModel.refreshToken);
-        return Right(tokenModel);
-      } else {
-        return Left(ApiError.emptyResponse.errorString);
-      }
+
+      return responseData.fold(Left.new, (r) async {
+        if (r != null) {
+          final tokenDTO = TokenDTO.fromJson(r);
+          final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
+          await requestService
+              .getTokenService()
+              .setTokens(tokenModel.accessToken, tokenModel.refreshToken);
+          return Right(tokenModel);
+        } else {
+          return Left(ApiError.loadUser.errorString);
+        }
+      });
+      // if (responseData != null) {
+      //   final tokenDTO = TokenDTO.fromJson(responseData);
+      //   final tokenModel = TokenModel.fromDTO(dto: tokenDTO);
+      //   final tokenService = requestService.getTokenService();
+      //   await tokenService.setTokens(
+      //       tokenModel.accessToken, tokenModel.refreshToken);
+      //   return Right(tokenModel);
+      // } else {
+      //   return Left(ApiError.emptyResponse.errorString);
+      // }
     } on String catch (e) {
       return Left(e);
     }

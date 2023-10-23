@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 final class AuthService {
   const AuthService({required this.authRepository});
 
-  final AuthRepository authRepository;
+  final AuthRepositoryProtocol authRepository;
 
   Future<Either<String, TokenModel>> login(
       {required LoginModel loginModel}) async {

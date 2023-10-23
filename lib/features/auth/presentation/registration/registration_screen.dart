@@ -78,7 +78,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: 1,
                             color: colorScheme.textColor.disableSecondary)),
                     const SizedBox(height: 56),
-
                     RegistrationTextFieldsView(
                         registerModel: registerModel,
                         onChanged: (registerModel) {
@@ -96,7 +95,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             isLoginLoading.value = false;
                           });
                         }),
-
                     const SizedBox(height: 44),
                     RegistrationView(
                       isLoginLoading: isLoginLoading,
@@ -106,7 +104,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ValueListenableBuilder(
                         valueListenable: isLoginLoading,
                         builder: (context, value, child) {
-                          //return Builder(builder: (context) {
                           return PrimaryButton(
                             buttonText: 'Register',
                             isLoading: isLoginLoading.value,
@@ -126,20 +123,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   registerModel: registerModel));
                             },
                           );
-                        }
-
-                        // isLoading: isLoginLoading.value,
-                        // color: colorScheme.background.blue,
-                        // titleColor: colorScheme.textColor.white,
-                        // onPressed: () {
-                        //   isLoginLoading.value = !isLoginLoading.value;
-                        //   context.read<AuthBloc>().add(AuthRegisterEvent(registerModel: registerModel));
-                        //},
-                        ),
-
-                    // });
-                    //},
-                    //),
+                        }),
                     const SizedBox(height: 24),
                     PrimaryButton(
                         buttonText: 'Sign Up with Google',

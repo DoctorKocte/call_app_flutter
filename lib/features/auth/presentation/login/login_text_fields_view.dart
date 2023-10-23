@@ -7,11 +7,13 @@ class LoginTextFieldsView extends StatefulWidget {
   const LoginTextFieldsView(
       {required this.loginType,
       required this.loginModel,
+      required this.tabsTitles,
       required this.onChanged,
       super.key});
 
   final LoginType loginType;
   final LoginModel loginModel;
+  final List<String> tabsTitles;
 
   final Function(LoginModel) onChanged;
 
@@ -25,8 +27,7 @@ class _LoginTextFieldsViewState extends State<LoginTextFieldsView> {
     return Column(children: [
       InputTextField(
         text: widget.loginModel.username,
-        textFieldTitle:
-            widget.loginType == LoginType.email ? 'Login' : 'Phone number',
+        textFieldTitle: widget.tabsTitles[widget.loginType.index],
         onChanged: (value) {
           if (widget.loginType == LoginType.email) {
             widget.loginModel.username = value;

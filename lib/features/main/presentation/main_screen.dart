@@ -1,9 +1,9 @@
 import 'package:call_app/assets/assets.gen.dart';
+import 'package:call_app/features/all_contacts/presentation/all_contacts_screen.dart';
 import 'package:call_app/features/friend_profile/presentation/friend_profile_screen.dart';
 import 'package:call_app/features/main/domain/repository/user_repository.dart';
 import 'package:call_app/features/main/domain/service/user_service.dart';
 import 'package:call_app/features/main/models/favorite_card_model.dart';
-import 'package:call_app/features/main/models/recent_contact.dart';
 import 'package:call_app/features/main/models/user_model.dart';
 import 'package:call_app/features/main/presentation/bloc/user_bloc.dart';
 import 'package:call_app/features/main/presentation/bloc/user_state.dart';
@@ -79,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Scaffold(
             backgroundColor: colorScheme.background.main,
             appBar: AppBar(
-              forceMaterialTransparency: true,
+                forceMaterialTransparency: true,
                 title: const Text('Welcome'),
                 titleTextStyle: textStyles.graphik18semibold,
                 centerTitle: true,
@@ -90,10 +90,10 @@ class _MainScreenState extends State<MainScreen> {
                     child: GestureDetector(
                         onTap: () {
                           if (userData != null) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ProfileScreen(
-                                  userData: userData!,
-                                  userService: userService)));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ProfileScreen(
+                                    userData: userData!,
+                                    userService: userService)));
                           }
                         },
                         child: Assets.images.menu.image())),
@@ -165,11 +165,21 @@ class _MainScreenState extends State<MainScreen> {
                                   children: [
                                     Text('Recent',
                                         style: textStyles.graphik24semibold),
-                                    Text('All',
-                                        style: textStyles.graphik18semibold
-                                            .copyWith(
-                                                color: colorScheme
-                                                    .textColor.lightBlue)),
+                                    GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      AllContactsScreen(
+                                                          contacts: state
+                                                              .userData
+                                                              .contacts)));
+                                        },
+                                        child: Text('All',
+                                            style: textStyles.graphik18semibold
+                                                .copyWith(
+                                                    color: colorScheme
+                                                        .textColor.lightBlue))),
                                   ])),
                           Padding(
                               padding: EdgeInsets.all(spacer.sp20),
@@ -182,18 +192,12 @@ class _MainScreenState extends State<MainScreen> {
                                           style: textStyles.graphik20normal
                                               .copyWith(height: 0.9)))
                                   : ContactsList(
-                                      recentContacts:
-                                         // state.userData.recentContacts
-                                       [
-                                          RecentContact(
-                                              date: DateTime.now(),
-                                              contact:
-                                                  state.userData.contacts.first),
-                                          RecentContact(
-                                              date: DateTime.now(),
-                                              contact: state.userData.contacts.last)
-                                        ]
-                                      ))
+                                      contacts: [state.userData.contacts.first, state.userData.contacts.last]
+                                      // state.userData.recentContacts
+                                      //     .map((e) => e.contact)
+                                      //     .toList()
+                                          )
+                              )
                         ]));
                   })
               };

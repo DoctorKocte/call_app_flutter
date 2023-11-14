@@ -96,7 +96,7 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
                   color: widget.favoriteCardModel.backgroundColor),
               child: Padding(
                   padding: EdgeInsets.fromLTRB(
-                      spacer.sp16, spacer.sp28, spacer.sp16, spacer.sp44),
+                      spacer.sp16, spacer.sp28, spacer.sp16, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

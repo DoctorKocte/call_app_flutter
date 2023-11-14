@@ -15,8 +15,10 @@ final class UserService {
     );
   }
 
-  Future<Either<String, void>> changeProfileImage({required String imageString}) async {
-     final result = await userRepository.changeProfileImage(imageString: imageString);
+  Future<Either<String, void>> changeProfileImage(
+      {required String imageString}) async {
+    final result =
+        await userRepository.changeProfileImage(imageString: imageString);
     return result.fold(
       Left.new,
       Right.new,

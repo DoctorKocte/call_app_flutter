@@ -4,6 +4,7 @@ class BackgroundColors {
   const BackgroundColors({
     required this.main,
     required this.white,
+    required this.lightBlack,
     required this.black,
     required this.lightGray,
     required this.darkGray,
@@ -34,6 +35,7 @@ class BackgroundColors {
   factory BackgroundColors.light() => const BackgroundColors(
         main: _main,
         white: _white,
+        lightBlack: _lightBlack,
         black: _black,
         lightGray: _lightGray,
         darkGray: _darkGray,
@@ -63,6 +65,7 @@ class BackgroundColors {
 
   final Color main;
   final Color white;
+  final Color lightBlack;
   final Color black;
   final Color lightGray;
   final Color darkGray;
@@ -94,6 +97,7 @@ class BackgroundColors {
   static const Color _main = Color.fromRGBO(235, 241, 245, 1);
   static const Color _white =Colors.white;
   static const Color _black = Colors.black;
+  static const Color _lightBlack = Color.fromARGB(255, 18, 18, 18);
   static const Color _lightGray = Color.fromRGBO(216, 226, 235, 1);
   static const Color _darkGray = Color.fromRGBO(204, 213, 221, 1);
   static const Color _disableGray = Color.fromRGBO(208, 220, 228, 1);
